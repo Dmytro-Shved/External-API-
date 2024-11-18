@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,5 +9,5 @@ Route::resource('/posts', PostController::class);
 Route::get('/posts/{post}/comments', [PostController::class, 'post_comments']);
 
 // comments
-Route::resource('/comments', CommentsController::class);
-Route::get('/comments/post/{postId}', [CommentsController::class, 'comments_post']);
+Route::resource('/comments', CommentController::class);
+Route::get('/comments/post/{postId}', [CommentController::class, 'comments_post']);
