@@ -58,11 +58,19 @@ class PostController extends Controller
     // Delete the post using id
     public function destroy(string $id)
     {
-        $response = Http::withoutVerifying()
+        Http::withoutVerifying()
             ->delete('https://jsonplaceholder.typicode.com/posts/'. $id);
 
         return [
             'message' => 'Deleted post with id ' . $id
         ];
+    }
+
+    public function posts_comments(string $id)
+    {
+        $response = Http::withoutVerifying()
+            ->get('https://jsonplaceholder.typicode.com/posts/' . $id . '/comments');
+
+        return response()->json($response->json());
     }
 }
