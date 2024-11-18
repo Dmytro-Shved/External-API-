@@ -11,3 +11,11 @@ Route::get('/posts/{post}/comments', [PostController::class, 'post_comments']);
 // comments
 Route::resource('/comments', CommentController::class);
 Route::get('/comments/post/{postId}', [CommentController::class, 'comments_post']);
+
+// albums
+
+//photos
+
+//todos
+
+//users
