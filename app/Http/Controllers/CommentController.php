@@ -10,8 +10,7 @@ class CommentController extends Controller
     // All comments
     public function index()
     {
-        $response = Http::withoutVerifying()
-            ->get('https://jsonplaceholder.typicode.com/comments/');
+        $response = Http::get('https://jsonplaceholder.typicode.com/comments/');
 
         return response()->json($response->json());
     }
@@ -27,8 +26,7 @@ class CommentController extends Controller
           'body' => 'Some text',
         ];
 
-        $response = Http::withoutVerifying()
-            ->post('https://jsonplaceholder.typicode.com/comments', $data);
+        $response = Http::post('https://jsonplaceholder.typicode.com/comments', $data);
 
         return response()->json($response->json());
     }
@@ -36,8 +34,7 @@ class CommentController extends Controller
     // Show comment using id
     public function show(string $id)
     {
-        $response = Http::withoutVerifying()
-            ->get('https://jsonplaceholder.typicode.com/comments/' . $id);
+        $response = Http::get('https://jsonplaceholder.typicode.com/comments/' . $id);
 
         return response()->json($response->json());
     }
@@ -53,8 +50,7 @@ class CommentController extends Controller
             'body' => 'Some text updated',
         ];
 
-        $response = Http::withoutVerifying()
-            ->put('https://jsonplaceholder.typicode.com/comments/' . $id, $data);
+        $response = Http::put('https://jsonplaceholder.typicode.com/comments/' . $id, $data);
 
         return response()->json($response->json());
     }
@@ -62,8 +58,7 @@ class CommentController extends Controller
     // Delete comment using id
     public function destroy(string $id)
     {
-        Http::withoutVerifying()
-            ->delete('https://jsonplaceholder.typicode.com/comments/' . $id);
+        Http::delete('https://jsonplaceholder.typicode.com/comments/' . $id);
 
         return [
             'message' => 'Deleted comment with id ' . $id
@@ -72,8 +67,7 @@ class CommentController extends Controller
 
     public function comments_post(string $id)
     {
-        $response = Http::withoutVerifying()
-            ->get('https://jsonplaceholder.typicode.com/comments', [
+        $response = Http::get('https://jsonplaceholder.typicode.com/comments', [
                 'postId' => $id
             ]);
 

@@ -10,8 +10,7 @@ class PostController extends Controller
     // All posts
     public function index()
     {
-        $response = Http::withoutVerifying()
-            ->get('https://jsonplaceholder.typicode.com/posts/');
+        $response = Http::get('https://jsonplaceholder.typicode.com/posts/');
 
         return response()->json($response->json());
     }
@@ -25,8 +24,7 @@ class PostController extends Controller
             'userId' => '1',
         ];
 
-        $response = Http::withoutVerifying()
-            ->post('https://jsonplaceholder.typicode.com/posts', $data);
+        $response = Http::post('https://jsonplaceholder.typicode.com/posts', $data);
 
         return response()->json($response->json());
     }
@@ -34,8 +32,7 @@ class PostController extends Controller
     // Show the post using id
     public function show(string $id)
     {
-        $response = Http::withoutVerifying()
-            ->get('https://jsonplaceholder.typicode.com/posts/'. $id);
+        $response = Http::get('https://jsonplaceholder.typicode.com/posts/'. $id);
 
         return response()->json($response->json());
     }
@@ -49,8 +46,7 @@ class PostController extends Controller
             'userId' => 1,
         ];
 
-        $response = Http::withoutVerifying()
-            ->put('https://jsonplaceholder.typicode.com/posts/'. $id, $data);
+        $response = Http::put('https://jsonplaceholder.typicode.com/posts/'. $id, $data);
 
         return response()->json($response->json());
     }
@@ -58,8 +54,7 @@ class PostController extends Controller
     // Delete the post using id
     public function destroy(string $id)
     {
-        Http::withoutVerifying()
-            ->delete('https://jsonplaceholder.typicode.com/posts/'. $id);
+        Http::delete('https://jsonplaceholder.typicode.com/posts/'. $id);
 
         return [
             'message' => 'Deleted post with id ' . $id
@@ -68,8 +63,7 @@ class PostController extends Controller
 
     public function posts_comments(string $id)
     {
-        $response = Http::withoutVerifying()
-            ->get('https://jsonplaceholder.typicode.com/posts/' . $id . '/comments');
+        $response = Http::get('https://jsonplaceholder.typicode.com/posts/' . $id . '/comments');
 
         return response()->json($response->json());
     }
