@@ -58,7 +58,7 @@ class PhotoController extends Controller
     // Delete a photo using id
     public function destroy(string $id)
     {
-        $response = Http::delete('https://jsonplaceholder.typicode.com/photos/' . $id);
+        Http::delete('https://jsonplaceholder.typicode.com/photos/' . $id);
 
         return [
           'message' => 'Deleted photo with id ' . $id
