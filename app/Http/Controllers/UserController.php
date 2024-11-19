@@ -141,6 +141,8 @@ class UserController extends Controller
             ]) ;
         }
 
-        return response()->json([], 404);
+        return response()->json([
+            'error' => 'Something went wrong'
+        ]);
     }
 }

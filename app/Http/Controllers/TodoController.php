@@ -103,6 +103,8 @@ class TodoController extends Controller
             ]);
         }
 
-        return response()->json([]);
+        return response()->json([
+            'error' => 'Something went wrong'
+        ]);
     }
 }

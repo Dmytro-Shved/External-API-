@@ -98,9 +98,9 @@ class PostController extends Controller
         $response = Http::delete('https://jsonplaceholder.typicode.com/posts/'. $id);
 
         if ($response->successful()){
-            return [
+            return response()->json([
                 'message' => 'Deleted post with id ' . $id
-            ];
+            ]);
         }
 
         return response()->json([
