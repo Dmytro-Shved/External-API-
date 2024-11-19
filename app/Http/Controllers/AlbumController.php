@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 class AlbumController extends Controller
 {
@@ -12,7 +13,13 @@ class AlbumController extends Controller
     {
         $response = Http::get('https://jsonplaceholder.typicode.com/albums/');
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Create a new album (id: 101 always)
@@ -24,9 +31,27 @@ class AlbumController extends Controller
           'title' => 'Test album title',
         ];
 
+        $validator = Validator::make($data, [
+            'userId' => 'required|numeric',
+            'id' => 'required|numeric',
+            'title' => 'required|string|min:5|max:100',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+                'Validation error(s)' => $validator->errors()
+            ], 422);
+        }
+
         $response = Http::post('https://jsonplaceholder.typicode.com/albums', $data);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Show album using id
@@ -34,7 +59,13 @@ class AlbumController extends Controller
     {
         $response = Http::get('https://jsonplaceholder.typicode.com/albums/' . $id);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Update a new album
@@ -46,18 +77,42 @@ class AlbumController extends Controller
             'title' => 'Test album title updated',
         ];
 
+        $validator = Validator::make($data, [
+            'userId' => 'required|numeric',
+            'id' => 'required|numeric',
+            'title' => 'required|string|min:5|max:100',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+               'Validation error(s)' => $validator->errors()
+            ]);
+        }
+
         $response = Http::put('https://jsonplaceholder.typicode.com/albums/' . $id, $data);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+            'error' => 'Something went wrong'
+        ]);
     }
 
     // Delete an album
     public function destroy(string $id)
     {
-        Http::delete('https://jsonplaceholder.typicode.com/albums/' . $id);
+        $response = Http::delete('https://jsonplaceholder.typicode.com/albums/' . $id);
 
-        return [
-            'message' => 'Deleted album with id ' . $id
-        ];
+        if ($response->successful()){
+            return [
+                'message' => 'Deleted album with id ' . $id
+            ];
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 }
