@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // posts
@@ -25,3 +26,4 @@ Route::apiResource('/photos', PhotoController::class);
 Route::apiResource('/todos', TodoController::class);
 
 //users
+Route::apiResource('/users', UserController::class);

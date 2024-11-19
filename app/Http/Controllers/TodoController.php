@@ -56,7 +56,7 @@ class TodoController extends Controller
    // Delete a todo using id
     public function destroy(string $id)
     {
-        $response = Http::delete('https://jsonplaceholder.typicode.com/todos/' . $id);
+        Http::delete('https://jsonplaceholder.typicode.com/todos/' . $id);
 
         return [
            'message' => 'Deleted todo with id ' . $id
