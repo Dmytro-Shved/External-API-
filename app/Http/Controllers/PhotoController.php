@@ -25,13 +25,7 @@ class PhotoController extends Controller
     // Create a new photo (id: 5001 always)
     public function store(Request $request)
     {
-        $data = [
-          'albumId' => $request->albumId,
-          'id' => $request->id,
-          'title' => $request->title,
-          'url' => $request->url,
-          'thumbnailUrl' => $request->thumbnailUrl,
-        ];
+        $data = $request->all();
 
         $validator = Validator::make($data, [
             'albumId' => 'required|numeric',
@@ -75,13 +69,7 @@ class PhotoController extends Controller
     // Update a photo using id
     public function update(Request $request, string $id)
     {
-        $data = [
-            'albumId' => $request->albumId,
-            'id' => $request->id,
-            'title' => $request->title,
-            'url' => $request->url,
-            'thumbnailUrl' => $request->thumbnailUrl,
-        ];
+        $data = $request->all();
 
         $validator = Validator::make($data, [
             'albumId' => 'required|numeric',
@@ -114,9 +102,9 @@ class PhotoController extends Controller
         $response = Http::delete('https://jsonplaceholder.typicode.com/photos/' . $id);
 
         if ($response->successful()){
-            return [
+            return response()->json([
                 'message' => 'Deleted photo with id ' . $id
-            ];
+            ]);
         }
 
         return response()->json([

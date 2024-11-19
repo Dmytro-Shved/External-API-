@@ -25,12 +25,7 @@ class TodoController extends Controller
     // Create a new todo (id:201 always)
     public function store(Request $request)
     {
-        $data = [
-          'userId' => $request->userId,
-          'id' => $request->id,
-          'title' => $request->title,
-          'completed' => $request->completed,
-        ];
+        $data = $request->all();
 
         $validator = Validator::make($data, [
             'userId' => 'required|numeric',
@@ -71,12 +66,7 @@ class TodoController extends Controller
     // Update a todo
     public function update(Request $request, string $id)
     {
-        $data = [
-            'userId' => $request->userId,
-            'id' => $request->id,
-            'title' => $request->title,
-            'completed' => $request->completed,
-        ];
+        $data = $request->all();
 
         $validator = Validator::make($data, [
             'userId' => 'required|numeric',
@@ -108,9 +98,9 @@ class TodoController extends Controller
         $response = Http::delete('https://jsonplaceholder.typicode.com/todos/' . $id);
 
         if ($response->successful()){
-            return [
+            return response()->json([
                 'message' => 'Deleted todo with id ' . $id
-            ];
+            ]);
         }
 
         return response()->json([]);

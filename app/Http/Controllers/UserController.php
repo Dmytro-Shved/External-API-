@@ -136,9 +136,9 @@ class UserController extends Controller
        $response = Http::delete('https://jsonplaceholder.typicode.com/users/' . $id);
 
         if ($response->successful()){
-            return [
+            return response()->json([
                 'message' => 'Deleted user with id ' . $id
-            ];
+            ]) ;
         }
 
         return response()->json([], 404);

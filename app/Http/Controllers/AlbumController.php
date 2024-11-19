@@ -25,11 +25,7 @@ class AlbumController extends Controller
     // Create a new album (id: 101 always)
     public function store(Request $request)
     {
-        $data = [
-          'userId' => $request->userId,
-          'id' => $request->id,
-          'title' => $request->title,
-        ];
+        $data = $request->all();
 
         $validator = Validator::make($data, [
             'userId' => 'required|numeric',
@@ -71,11 +67,7 @@ class AlbumController extends Controller
     // Update a new album
     public function update(Request $request,string $id)
     {
-        $data = [
-            'userId' => $request->userId,
-            'id' => $request->id,
-            'title' => $request->title,
-        ];
+        $data = $request->all();
 
         $validator = Validator::make($data, [
             'userId' => 'required|numeric',
@@ -106,9 +98,9 @@ class AlbumController extends Controller
         $response = Http::delete('https://jsonplaceholder.typicode.com/albums/' . $id);
 
         if ($response->successful()){
-            return [
+            return response()->json([
                 'message' => 'Deleted album with id ' . $id
-            ];
+            ]);
         }
 
         return response()->json([

@@ -13,19 +13,19 @@ class CommentController extends Controller
     {
         $response = Http::get('https://jsonplaceholder.typicode.com/comments/');
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Create a new comment (id: 501 always)
     public function store(Request $request)
     {
-        $data = [
-          'postId' => $request->postId,
-          'id' => $request->id,
-          'name' => $request->name,
-          'email' => $request->email,
-          'body' => $request->body,
-        ];
+        $data = $request->all();
 
         $validator = Validator::make($data, [
            'postId' => 'required|numeric',
@@ -57,19 +57,19 @@ class CommentController extends Controller
     {
         $response = Http::get('https://jsonplaceholder.typicode.com/comments/' . $id);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Update comment using id
     public function update(Request $request,string $id)
     {
-        $data = [
-            'postId' => $request->postId,
-            'id' => $request->id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'body' => $request->body,
-        ];
+        $data = $request->all();
 
         $validator = Validator::make($data, [
             'postId' => 'required|numeric',
@@ -99,11 +99,17 @@ class CommentController extends Controller
     // Delete comment using id
     public function destroy(string $id)
     {
-        Http::delete('https://jsonplaceholder.typicode.com/comments/' . $id);
+        $response = Http::delete('https://jsonplaceholder.typicode.com/comments/' . $id);
 
-        return [
-            'message' => 'Deleted comment with id ' . $id
-        ];
+        if ($response->successful()){
+            return response()->json([
+                'message' => 'Deleted comment with id ' . $id
+            ]);
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     public function comments_post(string $id)
