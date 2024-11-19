@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,11 +16,13 @@ class UserController extends Controller
             return response()->json($response->json());
         }
 
-        return response()->json([]);
+        return response()->json([
+            'error' => 'Something went wrong',
+        ], 404);
     }
 
     // Create a new user (id: 11 always)
-    public function store(Request $request)
+    public function store()
     {
         $data = [
             'id' => 1,
@@ -51,8 +52,8 @@ class UserController extends Controller
         ];
 
         $validator = Validator::make($data, [
-            'name' => 'required|min:2|max:50',
-            'username' => 'required|min:2|max:50',
+            'name' => 'required|string|min:2|max:50',
+            'username' => 'required|string|min:2|max:50',
             'email' => 'required|email|max:50',
 
             'address' => 'array',
@@ -81,7 +82,13 @@ class UserController extends Controller
 
         $response = Http::post('https://jsonplaceholder.typicode.com/users', $data);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ], 400);
     }
 
     // Get a user using id
@@ -89,15 +96,21 @@ class UserController extends Controller
     {
         $response = Http::get('https://jsonplaceholder.typicode.com/users/' . $id);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+            'error' => 'Something went wrong'
+        ], 404);
     }
 
     // Update a user
-    public function update(Request $request, string $id)
+    public function update(string $id)
     {
         $data = [
             'id' => 1,
-            'name' => 'Name updated',
+            'name' => 'Name',
             'username' => 'Username updated',
             'email' => 'name_username_updated@gmail.com',
             'address' => [
@@ -120,25 +133,25 @@ class UserController extends Controller
         ];
 
         $validator = Validator::make($data, [
-            'name' => 'required|min:2|max:50',
-            'username' => 'required|min:2|max:50',
+            'name' => 'required|string|min:2|max:50',
+            'username' => 'required|string|min:2|max:50',
             'email' => 'required|email|max:50',
 
             'address' => 'array',
-            'address.street' => 'min:5',
-            'address.suite' => 'min:5',
-            'address.city' => 'min:5',
-            'address.zipcode' => 'max:50',
-            'address.geo.lat' => 'numeric',
-            'address.geo.lng' => 'numeric',
+                'address.street' => 'min:5',
+                'address.suite' => 'min:5',
+                'address.city' => 'min:5',
+                'address.zipcode' => 'max:50',
+                'address.geo.lat' => 'numeric',
+                'address.geo.lng' => 'numeric',
 
             'phone' => 'required|max:50',
             'website' => 'required|url',
 
             'company' => 'array',
-            'company.name' => 'required|max:50',
-            'company.catchPhrase' => 'required|max:50',
-            'company.bs' => 'required|max:50'
+                'company.name' => 'required|max:50',
+                'company.catchPhrase' => 'required|max:50',
+                'company.bs' => 'required|max:50'
         ]);
 
         // Check validation error
@@ -150,16 +163,26 @@ class UserController extends Controller
 
         $response = Http::put('https://jsonplaceholder.typicode.com/users/' . $id, $data);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong',
+        ]);
     }
 
     // Delete user using id
     public function destroy(string $id)
     {
-        Http::delete('https://jsonplaceholder.typicode.com/users/' . $id);
+       $response = Http::delete('https://jsonplaceholder.typicode.com/users/' . $id);
 
-        return [
-            'message' => 'Deleted user with id ' . $id
-        ];
+        if ($response->successful()){
+            return [
+                'message' => 'Deleted user with id ' . $id
+            ];
+        }
+
+        return response()->json([], 404);
     }
 }
