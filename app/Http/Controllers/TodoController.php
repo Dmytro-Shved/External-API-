@@ -41,7 +41,7 @@ class TodoController extends Controller
 
         if ($validator->fails()){
             return response()->json([
-                'Validation error' => $validator->errors()
+                'Validation error(s)' => $validator->errors()
             ],422);
         }
 
@@ -87,7 +87,7 @@ class TodoController extends Controller
 
         if ($validator->fails()){
             return response()->json([
-               'Validation error' => $validator->errors()
+               'Validation error(s)' => $validator->errors()
             ]);
         }
 
