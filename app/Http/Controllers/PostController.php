@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -12,21 +13,45 @@ class PostController extends Controller
     {
         $response = Http::get('https://jsonplaceholder.typicode.com/posts/');
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Create a new post (id: 101 always)
-    public function create()
+    public function store()
     {
         $data = [
             'title' => 'Lorem ipsum',
             'body' => 'Lorem ipsum dolor sit amet.',
-            'userId' => '1',
+            'userId' => 1,
         ];
+
+        $validator = Validator::make($data, [
+            'title' => 'required|string|min:5|max:100',
+            'body' => 'required|string|min:5|max:255',
+            'userId' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+               'Validation error(s)' => $validator->errors()
+            ], 422);
+        }
 
         $response = Http::post('https://jsonplaceholder.typicode.com/posts', $data);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Show the post using id
@@ -34,7 +59,13 @@ class PostController extends Controller
     {
         $response = Http::get('https://jsonplaceholder.typicode.com/posts/'. $id);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Update the post using id
@@ -46,25 +77,55 @@ class PostController extends Controller
             'userId' => 1,
         ];
 
+        $validator = Validator::make($data, [
+            'title' => 'required|string|min:5|max:100',
+            'body' => 'required|string|min:5|max:255',
+            'userId' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+               'Validation error(s)' => $validator->errors()
+            ], 422);
+        }
+
         $response = Http::put('https://jsonplaceholder.typicode.com/posts/'. $id, $data);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Delete the post using id
     public function destroy(string $id)
     {
-        Http::delete('https://jsonplaceholder.typicode.com/posts/'. $id);
+        $response = Http::delete('https://jsonplaceholder.typicode.com/posts/'. $id);
 
-        return [
-            'message' => 'Deleted post with id ' . $id
-        ];
+        if ($response->successful()){
+            return [
+                'message' => 'Deleted post with id ' . $id
+            ];
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     public function post_comments(string $id)
     {
         $response = Http::get('https://jsonplaceholder.typicode.com/posts/' . $id . '/comments');
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 }
