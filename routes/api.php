@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,7 @@ Route::get('/comments/post/{postId}', [CommentController::class, 'comments_post'
 Route::resource('/albums', AlbumController::class);
 
 //photos
+Route::resource('/photos', PhotoController::class);
 
 //todos
 
