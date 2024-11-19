@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 class TodoController extends Controller
 {
@@ -12,11 +13,17 @@ class TodoController extends Controller
     {
         $response = Http::get('https://jsonplaceholder.typicode.com/todos');
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ], 404);
     }
 
     // Create a new todo (id:201 always)
-    public function store(Request $request)
+    public function store()
     {
         $data = [
           'userId' => 1,
@@ -25,9 +32,26 @@ class TodoController extends Controller
           'completed' => true,
         ];
 
+        $validator = Validator::make($data, [
+            'userId' => 'required|numeric',
+            'id' => 'required|numeric',
+            'title' => 'required|string|min:5|max:100',
+            'completed' => 'required|bool',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+                'Validation error' => $validator->errors()
+            ],422);
+        }
+
         $response = Http::post('https://jsonplaceholder.typicode.com/todos', $data);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([]);
     }
 
     // Get a todo using id
@@ -35,11 +59,17 @@ class TodoController extends Controller
     {
         $response = Http::get('https://jsonplaceholder.typicode.com/todos/' . $id);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Update a todo
-    public function update(Request $request, string $id)
+    public function update(string $id)
     {
         $data = [
             'userId' => 1,
@@ -48,18 +78,41 @@ class TodoController extends Controller
             'completed' => true,
         ];
 
+        $validator = Validator::make($data, [
+            'userId' => 'required|numeric',
+            'id' => 'required|numeric',
+            'title' => 'required|string|min:5|max:100',
+            'completed' => 'required|bool',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+               'Validation error' => $validator->errors()
+            ]);
+        }
+
         $response = Http::put('https://jsonplaceholder.typicode.com/todos/' . $id, $data);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+            'error' => 'Something went wrong'
+        ]);
     }
 
-   // Delete a todo using id
+    // Delete a todo using id
     public function destroy(string $id)
     {
-        Http::delete('https://jsonplaceholder.typicode.com/todos/' . $id);
+        $response = Http::delete('https://jsonplaceholder.typicode.com/todos/' . $id);
 
-        return [
-           'message' => 'Deleted todo with id ' . $id
-        ];
+        if ($response->successful()){
+            return [
+                'message' => 'Deleted todo with id ' . $id
+            ];
+        }
+
+        return response()->json([]);
     }
 }
