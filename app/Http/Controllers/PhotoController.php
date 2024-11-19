@@ -23,14 +23,14 @@ class PhotoController extends Controller
     }
 
     // Create a new photo (id: 5001 always)
-    public function store()
+    public function store(Request $request)
     {
         $data = [
-          'albumId' => 1,
-          'id' => 1,
-          'title' => 'Test title',
-          'url' => 'https://test.url.com/3/2c1',
-          'thumbnailUrl' => 'https://test.url.com/150/3/2c1',
+          'albumId' => $request->albumId,
+          'id' => $request->id,
+          'title' => $request->title,
+          'url' => $request->url,
+          'thumbnailUrl' => $request->thumbnailUrl,
         ];
 
         $validator = Validator::make($data, [
@@ -73,14 +73,14 @@ class PhotoController extends Controller
     }
 
     // Update a photo using id
-    public function update(string $id)
+    public function update(Request $request, string $id)
     {
         $data = [
-            'albumId' => 1,
-            'id' => 1,
-            'title' => 'Test title updated',
-            'url' => 'https://updated.url.com/3/2c1',
-            'thumbnailUrl' => 'https://updated.url.com/150/3/2c1',
+            'albumId' => $request->albumId,
+            'id' => $request->id,
+            'title' => $request->title,
+            'url' => $request->url,
+            'thumbnailUrl' => $request->thumbnailUrl,
         ];
 
         $validator = Validator::make($data, [

@@ -23,13 +23,13 @@ class TodoController extends Controller
     }
 
     // Create a new todo (id:201 always)
-    public function store()
+    public function store(Request $request)
     {
         $data = [
-          'userId' => 1,
-          'id' => 1,
-          'title' => 'Test todo',
-          'completed' => true,
+          'userId' => $request->userId,
+          'id' => $request->id,
+          'title' => $request->title,
+          'completed' => $request->completed,
         ];
 
         $validator = Validator::make($data, [
@@ -69,13 +69,13 @@ class TodoController extends Controller
     }
 
     // Update a todo
-    public function update(string $id)
+    public function update(Request $request, string $id)
     {
         $data = [
-            'userId' => 1,
-            'id' => 1,
-            'title' => 'Test todo updated',
-            'completed' => true,
+            'userId' => $request->userId,
+            'id' => $request->id,
+            'title' => $request->title,
+            'completed' => $request->completed,
         ];
 
         $validator = Validator::make($data, [

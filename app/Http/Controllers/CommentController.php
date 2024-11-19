@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
@@ -16,19 +17,39 @@ class CommentController extends Controller
     }
 
     // Create a new comment (id: 501 always)
-    public function store()
+    public function store(Request $request)
     {
         $data = [
-          'postId' => 1,
-          'id' => 1,
-          'name' => 'New comment',
-          'email' => 'test@gmail.com',
-          'body' => 'Some text',
+          'postId' => $request->postId,
+          'id' => $request->id,
+          'name' => $request->name,
+          'email' => $request->email,
+          'body' => $request->body,
         ];
+
+        $validator = Validator::make($data, [
+           'postId' => 'required|numeric',
+           'id' => 'required|numeric',
+           'name' => 'required|string',
+           'email' => 'required|string|email',
+           'body' => 'required|string',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+               'Validation error(s)' => $validator->errors()
+            ]);
+        }
 
         $response = Http::post('https://jsonplaceholder.typicode.com/comments', $data);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Show comment using id
@@ -40,19 +61,39 @@ class CommentController extends Controller
     }
 
     // Update comment using id
-    public function update(string $id)
+    public function update(Request $request,string $id)
     {
         $data = [
-            'postId' => 1,
-            'id' => 1,
-            'name' => 'Updated comment',
-            'email' => 'test_updated@gmail.com',
-            'body' => 'Some text updated',
+            'postId' => $request->postId,
+            'id' => $request->id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'body' => $request->body,
         ];
+
+        $validator = Validator::make($data, [
+            'postId' => 'required|numeric',
+            'id' => 'required|numeric',
+            'name' => 'required|string',
+            'email' => 'required|string|email',
+            'body' => 'required|string',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json([
+               'Validation error(s)' => $validator->errors()
+            ]);
+        }
 
         $response = Http::put('https://jsonplaceholder.typicode.com/comments/' . $id, $data);
 
-        return response()->json($response->json());
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ]);
     }
 
     // Delete comment using id

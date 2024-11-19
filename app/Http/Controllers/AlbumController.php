@@ -23,12 +23,12 @@ class AlbumController extends Controller
     }
 
     // Create a new album (id: 101 always)
-    public function store()
+    public function store(Request $request)
     {
         $data = [
-          'userId' => 1,
-          'id' => 1,
-          'title' => 'Test album title',
+          'userId' => $request->userId,
+          'id' => $request->id,
+          'title' => $request->title,
         ];
 
         $validator = Validator::make($data, [
@@ -69,12 +69,12 @@ class AlbumController extends Controller
     }
 
     // Update a new album
-    public function update(string $id)
+    public function update(Request $request,string $id)
     {
         $data = [
-            'userId' => 1,
-            'id' => 1,
-            'title' => 'Test album title updated',
+            'userId' => $request->userId,
+            'id' => $request->id,
+            'title' => $request->title,
         ];
 
         $validator = Validator::make($data, [

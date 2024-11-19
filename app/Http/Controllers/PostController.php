@@ -23,12 +23,12 @@ class PostController extends Controller
     }
 
     // Create a new post (id: 101 always)
-    public function store()
+    public function store(Request $request)
     {
         $data = [
-            'title' => 'Lorem ipsum',
-            'body' => 'Lorem ipsum dolor sit amet.',
-            'userId' => 1,
+            'title' => $request->title,
+            'body' => $request->body,
+            'userId' => $request->userId,
         ];
 
         $validator = Validator::make($data, [
@@ -69,12 +69,12 @@ class PostController extends Controller
     }
 
     // Update the post using id
-    public function update(string $id)
+    public function update(Request $request,string $id)
     {
         $data = [
-            'title' => 'Updated title',
-            'body' => 'Updated body',
-            'userId' => 1,
+            'title' => $request->title,
+            'body' => $request->body,
+            'userId' => $request->userId,
         ];
 
         $validator = Validator::make($data, [

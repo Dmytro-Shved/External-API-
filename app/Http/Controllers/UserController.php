@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,52 +23,29 @@ class UserController extends Controller
     }
 
     // Create a new user (id: 11 always)
-    public function store()
+    public function store(Request $request)
     {
-        $data = [
-            'id' => 1,
-            'name' => 'Name',
-            'username' => 'Username',
-            'email' => 'name_username@gmail.com',
-
-            'address' => [
-                'street' => 'Street test',
-                'suite' => 'Suite test',
-                'city' => 'Test. 000',
-                'zipcode' => '00000-0000',
-                'geo' => [
-                    'lat' => -00.0000,
-                    'lng' => 00.0000,
-                ],
-            ],
-
-            'phone' => '0-000-000-0000 x00000',
-            'website' => 'https://test.com/',
-
-            'company' => [
-                'name' => 'Test-Company',
-                'catchPhrase' => 'Multi-testing client-server',
-                'bs' => 'harness real-time e-tests',
-            ],
-        ];
+        $data = $request->all();
 
         $validator = Validator::make($data, [
             'name' => 'required|string|min:2|max:50',
             'username' => 'required|string|min:2|max:50',
             'email' => 'required|email|max:50',
 
-            'address' => 'array',
-                'address.street' => 'min:5',
-                'address.suite' => 'min:5',
-                'address.city' => 'min:5',
-                'address.zipcode' => 'max:50',
-                'address.geo.lat' => 'numeric',
-                'address.geo.lng' => 'numeric',
+            'address' => 'required|array',
+                'address.street' => 'required',
+                'address.suite' => 'required',
+                'address.city' => 'required',
+                'address.zipcode' => 'required|max:50',
 
-            'phone' => 'required|max:50',
+                'address.geo' => 'required|array',
+                    'address.geo.lat' => 'required|numeric',
+                    'address.geo.lng' => 'required|numeric',
+
+            'phone' => 'required|string|max:50',
             'website' => 'required|url',
 
-            'company' => 'array',
+            'company' => 'required|array',
                 'company.name' => 'required|max:50',
                 'company.catchPhrase' => 'required|max:50',
                 'company.bs' => 'required|max:50'
@@ -106,52 +84,32 @@ class UserController extends Controller
     }
 
     // Update a user
-    public function update(string $id)
+    public function update(Request $request, string $id)
     {
-        $data = [
-            'id' => 1,
-            'name' => 'Name',
-            'username' => 'Username updated',
-            'email' => 'name_username_updated@gmail.com',
-            'address' => [
-                'street' => 'Street test updated',
-                'suite' => 'Suite test updated',
-                'city' => 'Test updated. 000',
-                'zipcode' => 00000-0000,
-                'geo' => [
-                    'lat' => '-00.0000',
-                    'lng' => '00.0000',
-                ],
-            ],
-            'phone' => '0-000-000-0000 x00000',
-            'website' => 'https://test.com/',
-            'company' => [
-                'name' => 'Test-Company updated',
-                'catchPhrase' => 'Multi-testing client-server updated',
-                'bs' => 'harness real-time e-tests updated',
-            ],
-        ];
+        $data = $request->all();
 
         $validator = Validator::make($data, [
             'name' => 'required|string|min:2|max:50',
             'username' => 'required|string|min:2|max:50',
             'email' => 'required|email|max:50',
 
-            'address' => 'array',
-                'address.street' => 'min:5',
-                'address.suite' => 'min:5',
-                'address.city' => 'min:5',
-                'address.zipcode' => 'max:50',
-                'address.geo.lat' => 'numeric',
-                'address.geo.lng' => 'numeric',
+            'address' => 'required|array',
+            'address.street' => 'required',
+            'address.suite' => 'required',
+            'address.city' => 'required',
+            'address.zipcode' => 'required|max:50',
 
-            'phone' => 'required|max:50',
+            'address.geo' => 'required|array',
+            'address.geo.lat' => 'required|numeric',
+            'address.geo.lng' => 'required|numeric',
+
+            'phone' => 'required|string|max:50',
             'website' => 'required|url',
 
-            'company' => 'array',
-                'company.name' => 'required|max:50',
-                'company.catchPhrase' => 'required|max:50',
-                'company.bs' => 'required|max:50'
+            'company' => 'required|array',
+            'company.name' => 'required|max:50',
+            'company.catchPhrase' => 'required|string',
+            'company.bs' => 'required|string'
         ]);
 
         // Check validation error
