@@ -61,7 +61,7 @@ class PostController extends Controller
         ];
     }
 
-    public function posts_comments(string $id)
+    public function post_comments(string $id)
     {
         $response = Http::get('https://jsonplaceholder.typicode.com/posts/' . $id . '/comments');
 
