@@ -36,6 +36,8 @@ class TodoController extends Controller
 
         if ($validator->fails()){
             return response()->json([
+                'status' => 'error',
+                'status code' => 422,
                 'Validation error(s)' => $validator->errors()
             ],422);
         }
@@ -79,8 +81,10 @@ class TodoController extends Controller
 
         if ($validator->fails()){
             return response()->json([
-               'Validation error(s)' => $validator->errors()
-            ], 422);
+                'status' => 'error',
+                'status code' => 422,
+                'Validation error(s)' => $validator->errors()
+            ],422);
         }
 
         $response = Http::put('https://jsonplaceholder.typicode.com/todos/' . $id, $data);

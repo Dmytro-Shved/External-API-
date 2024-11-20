@@ -37,7 +37,9 @@ class CommentController extends Controller
 
         if ($validator->fails()){
             return response()->json([
-               'Validation error(s)' => $validator->errors()
+                'status' => 'error',
+                'status code' => 422,
+                'Validation error(s)' => $validator->errors()
             ]);
         }
 
@@ -81,7 +83,9 @@ class CommentController extends Controller
 
         if ($validator->fails()){
             return response()->json([
-               'Validation error(s)' => $validator->errors()
+                'status' => 'error',
+                'status code' => 422,
+                'Validation error(s)' => $validator->errors()
             ]);
         }
 

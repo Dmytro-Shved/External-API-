@@ -54,7 +54,9 @@ class UserController extends Controller
         // Check validation error
         if ($validator->fails()){
             return response()->json([
-               'Validation error(s)' => $validator->errors()
+                'status' => 'error',
+                'status code' => 422,
+                'Validation error(s)' => $validator->errors()
             ], 422);
         }
 
@@ -115,6 +117,8 @@ class UserController extends Controller
         // Check validation error
         if ($validator->fails()){
             return response()->json([
+                'status' => 'error',
+                'status code' => 422,
                 'Validation error(s)' => $validator->errors()
             ], 422);
         }
