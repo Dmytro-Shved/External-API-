@@ -124,4 +124,32 @@ class PostController extends Controller
            'error' => 'Something went wrong'
         ], 404);
     }
+
+    public function posts_quantity(int $quantity)
+    {
+        if ($quantity <= 0){
+            return response()->json([
+               'error' => 'Quantity of posts cannot be less or equals 0'
+            ]);
+        }
+
+        $posts = [];
+
+        for ($i = 1; $i <= round($quantity); $i++) {
+            $response = Http::get('https://jsonplaceholder.typicode.com/posts/' . $i);
+
+            if ($response->successful()){
+                $posts[] = $response->json();
+            }else{
+                return response()->json([
+                   'error' => 'Something went wrong'
+                ], 500);
+            }
+        }
+
+        return response()->json([
+            'message' => 'Showing '. $quantity. ' posts',
+            'posts' => $posts
+        ], 200);
+    }
 }
