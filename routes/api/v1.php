@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\PhotoController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\TodoController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\v1\AlbumController;
+use App\Http\Controllers\Api\v1\CommentController;
+use App\Http\Controllers\Api\v1\PhotoController;
+use App\Http\Controllers\Api\v1\PostController;
+use App\Http\Controllers\Api\v1\TodoController;
+use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
 
 // posts
@@ -19,11 +19,11 @@ Route::get('/comments/post/{postId}', [CommentController::class, 'comments_post'
 // albums
 Route::apiResource('/albums', AlbumController::class);
 
-//photos
+// photos
 Route::apiResource('/photos', PhotoController::class);
 
-//todos
+// todos
 Route::apiResource('/todos', TodoController::class);
 
-//users
+// users
 Route::apiResource('/users', UserController::class);

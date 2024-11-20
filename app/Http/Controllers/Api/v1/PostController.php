@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
-class CommentController extends Controller
+class PostController extends Controller
 {
-    // All comments
+    // All posts
     public function index()
     {
-        $response = Http::get('https://jsonplaceholder.typicode.com/comments/');
+        $response = Http::get('https://jsonplaceholder.typicode.com/posts/');
 
         if ($response->successful()){
             return response()->json($response->json());
@@ -22,17 +22,15 @@ class CommentController extends Controller
         ], 404);
     }
 
-    // Create a new comment (id: 501 always)
+    // Create a new post (id: 101 always)
     public function store(Request $request)
     {
         $data = $request->all();
 
         $validator = Validator::make($data, [
-           'postId' => 'required|numeric',
-           'id' => 'required|numeric',
-           'name' => 'required|string',
-           'email' => 'required|string|email',
-           'body' => 'required|string',
+            'title' => 'required|string|min:5|max:100',
+            'body' => 'required|string|min:5|max:255',
+            'userId' => 'required|numeric',
         ]);
 
         if ($validator->fails()){
@@ -40,10 +38,10 @@ class CommentController extends Controller
                 'status' => 'error',
                 'status code' => 422,
                 'Validation error(s)' => $validator->errors()
-            ]);
+            ], 422);
         }
 
-        $response = Http::post('https://jsonplaceholder.typicode.com/comments', $data);
+        $response = Http::post('https://jsonplaceholder.typicode.com/posts', $data);
 
         if ($response->successful()){
             return response()->json($response->json());
@@ -54,10 +52,10 @@ class CommentController extends Controller
         ], 404);
     }
 
-    // Show comment using id
+    // Show the post using id
     public function show(string $id)
     {
-        $response = Http::get('https://jsonplaceholder.typicode.com/comments/' . $id);
+        $response = Http::get('https://jsonplaceholder.typicode.com/posts/'. $id);
 
         if ($response->successful()){
             return response()->json($response->json());
@@ -68,17 +66,15 @@ class CommentController extends Controller
         ], 404);
     }
 
-    // Update comment using id
+    // Update the post using id
     public function update(Request $request,string $id)
     {
         $data = $request->all();
 
         $validator = Validator::make($data, [
-            'postId' => 'required|numeric',
-            'id' => 'required|numeric',
-            'name' => 'required|string',
-            'email' => 'required|string|email',
-            'body' => 'required|string',
+            'title' => 'required|string|min:5|max:100',
+            'body' => 'required|string|min:5|max:255',
+            'userId' => 'required|numeric',
         ]);
 
         if ($validator->fails()){
@@ -86,10 +82,10 @@ class CommentController extends Controller
                 'status' => 'error',
                 'status code' => 422,
                 'Validation error(s)' => $validator->errors()
-            ]);
+            ], 422);
         }
 
-        $response = Http::put('https://jsonplaceholder.typicode.com/comments/' . $id, $data);
+        $response = Http::put('https://jsonplaceholder.typicode.com/posts/'. $id, $data);
 
         if ($response->successful()){
             return response()->json($response->json());
@@ -100,14 +96,14 @@ class CommentController extends Controller
         ], 404);
     }
 
-    // Delete comment using id
+    // Delete the post using id
     public function destroy(string $id)
     {
-        $response = Http::delete('https://jsonplaceholder.typicode.com/comments/' . $id);
+        $response = Http::delete('https://jsonplaceholder.typicode.com/posts/'. $id);
 
         if ($response->successful()){
             return response()->json([
-                'message' => 'Deleted comment with id ' . $id
+                'message' => 'Deleted post with id ' . $id
             ]);
         }
 
@@ -116,11 +112,9 @@ class CommentController extends Controller
         ], 404);
     }
 
-    public function comments_post(string $id)
+    public function post_comments(string $id)
     {
-        $response = Http::get('https://jsonplaceholder.typicode.com/comments', [
-                'postId' => $id
-            ]);
+        $response = Http::get('https://jsonplaceholder.typicode.com/posts/' . $id . '/comments');
 
         if ($response->successful()){
             return response()->json($response->json());

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
-class AlbumController extends Controller
+class PhotoController extends Controller
 {
-    // Get all albums
+    // Get all photos
     public function index()
     {
-        $response = Http::get('https://jsonplaceholder.typicode.com/albums/');
+        $response = Http::get('https://jsonplaceholder.typicode.com/photos');
 
         if ($response->successful()){
             return response()->json($response->json());
@@ -22,15 +22,17 @@ class AlbumController extends Controller
         ], 404);
     }
 
-    // Create a new album (id: 101 always)
+    // Create a new photo (id: 5001 always)
     public function store(Request $request)
     {
         $data = $request->all();
 
         $validator = Validator::make($data, [
-            'userId' => 'required|numeric',
+            'albumId' => 'required|numeric',
             'id' => 'required|numeric',
             'title' => 'required|string|min:5|max:100',
+            'url' => 'required|url',
+            'thumbnailUrl' => 'required|url',
         ]);
 
         if ($validator->fails()){
@@ -41,7 +43,7 @@ class AlbumController extends Controller
             ], 422);
         }
 
-        $response = Http::post('https://jsonplaceholder.typicode.com/albums', $data);
+        $response = Http::post('https://jsonplaceholder.typicode.com/photos', $data);
 
         if ($response->successful()){
             return response()->json($response->json());
@@ -52,10 +54,10 @@ class AlbumController extends Controller
         ], 404);
     }
 
-    // Show album using id
+    // Get a photo using id
     public function show(string $id)
     {
-        $response = Http::get('https://jsonplaceholder.typicode.com/albums/' . $id);
+        $response = Http::get('https://jsonplaceholder.typicode.com/photos/' . $id);
 
         if ($response->successful()){
             return response()->json($response->json());
@@ -66,15 +68,17 @@ class AlbumController extends Controller
         ], 404);
     }
 
-    // Update a new album
-    public function update(Request $request,string $id)
+    // Update a photo using id
+    public function update(Request $request, string $id)
     {
         $data = $request->all();
 
         $validator = Validator::make($data, [
-            'userId' => 'required|numeric',
+            'albumId' => 'required|numeric',
             'id' => 'required|numeric',
             'title' => 'required|string|min:5|max:100',
+            'url' => 'required|url',
+            'thumbnailUrl' => 'required|url',
         ]);
 
         if ($validator->fails()){
@@ -82,28 +86,28 @@ class AlbumController extends Controller
                 'status' => 'error',
                 'status code' => 422,
                 'Validation error(s)' => $validator->errors()
-            ]);
+            ], 422);
         }
 
-        $response = Http::put('https://jsonplaceholder.typicode.com/albums/' . $id, $data);
+        $response = Http::put('https://jsonplaceholder.typicode.com/photos/' . $id, $data);
 
         if ($response->successful()){
             return response()->json($response->json());
         }
 
         return response()->json([
-            'error' => 'Something went wrong'
+           'error' => 'Something went wrong'
         ], 404);
     }
 
-    // Delete an album
+    // Delete a photo using id
     public function destroy(string $id)
     {
-        $response = Http::delete('https://jsonplaceholder.typicode.com/albums/' . $id);
+        $response = Http::delete('https://jsonplaceholder.typicode.com/photos/' . $id);
 
         if ($response->successful()){
             return response()->json([
-                'message' => 'Deleted album with id ' . $id
+                'message' => 'Deleted photo with id ' . $id
             ]);
         }
 

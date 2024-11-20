@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
-class TodoController extends Controller
+class CommentController extends Controller
 {
-    // Get all todo
+    // All comments
     public function index()
     {
-        $response = Http::get('https://jsonplaceholder.typicode.com/todos');
+        $response = Http::get('https://jsonplaceholder.typicode.com/comments/');
 
         if ($response->successful()){
             return response()->json($response->json());
@@ -22,16 +22,17 @@ class TodoController extends Controller
         ], 404);
     }
 
-    // Create a new todo (id:201 always)
+    // Create a new comment (id: 501 always)
     public function store(Request $request)
     {
         $data = $request->all();
 
         $validator = Validator::make($data, [
-            'userId' => 'required|numeric',
-            'id' => 'required|numeric',
-            'title' => 'required|string|min:5|max:100',
-            'completed' => 'required|bool',
+           'postId' => 'required|numeric',
+           'id' => 'required|numeric',
+           'name' => 'required|string',
+           'email' => 'required|string|email',
+           'body' => 'required|string',
         ]);
 
         if ($validator->fails()){
@@ -39,24 +40,10 @@ class TodoController extends Controller
                 'status' => 'error',
                 'status code' => 422,
                 'Validation error(s)' => $validator->errors()
-            ],422);
+            ]);
         }
 
-        $response = Http::post('https://jsonplaceholder.typicode.com/todos', $data);
-
-        if ($response->successful()){
-            return response()->json($response->json());
-        }
-
-        return response()->json([
-            'error' => 'Something went wrong'
-        ], 404);
-    }
-
-    // Get a todo using id
-    public function show(string $id)
-    {
-        $response = Http::get('https://jsonplaceholder.typicode.com/todos/' . $id);
+        $response = Http::post('https://jsonplaceholder.typicode.com/comments', $data);
 
         if ($response->successful()){
             return response()->json($response->json());
@@ -67,16 +54,31 @@ class TodoController extends Controller
         ], 404);
     }
 
-    // Update a todo
-    public function update(Request $request, string $id)
+    // Show comment using id
+    public function show(string $id)
+    {
+        $response = Http::get('https://jsonplaceholder.typicode.com/comments/' . $id);
+
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
+        ], 404);
+    }
+
+    // Update comment using id
+    public function update(Request $request,string $id)
     {
         $data = $request->all();
 
         $validator = Validator::make($data, [
-            'userId' => 'required|numeric',
+            'postId' => 'required|numeric',
             'id' => 'required|numeric',
-            'title' => 'required|string|min:5|max:100',
-            'completed' => 'required|bool',
+            'name' => 'required|string',
+            'email' => 'required|string|email',
+            'body' => 'required|string',
         ]);
 
         if ($validator->fails()){
@@ -84,33 +86,48 @@ class TodoController extends Controller
                 'status' => 'error',
                 'status code' => 422,
                 'Validation error(s)' => $validator->errors()
-            ],422);
+            ]);
         }
 
-        $response = Http::put('https://jsonplaceholder.typicode.com/todos/' . $id, $data);
+        $response = Http::put('https://jsonplaceholder.typicode.com/comments/' . $id, $data);
 
         if ($response->successful()){
             return response()->json($response->json());
         }
 
         return response()->json([
-            'error' => 'Something went wrong'
+           'error' => 'Something went wrong'
         ], 404);
     }
 
-    // Delete a todo using id
+    // Delete comment using id
     public function destroy(string $id)
     {
-        $response = Http::delete('https://jsonplaceholder.typicode.com/todos/' . $id);
+        $response = Http::delete('https://jsonplaceholder.typicode.com/comments/' . $id);
 
         if ($response->successful()){
             return response()->json([
-                'message' => 'Deleted todo with id ' . $id
+                'message' => 'Deleted comment with id ' . $id
             ]);
         }
 
         return response()->json([
-            'error' => 'Something went wrong'
+           'error' => 'Something went wrong'
+        ], 404);
+    }
+
+    public function comments_post(string $id)
+    {
+        $response = Http::get('https://jsonplaceholder.typicode.com/comments', [
+                'postId' => $id
+            ]);
+
+        if ($response->successful()){
+            return response()->json($response->json());
+        }
+
+        return response()->json([
+           'error' => 'Something went wrong'
         ], 404);
     }
 }
