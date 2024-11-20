@@ -46,7 +46,9 @@ class TodoController extends Controller
             return response()->json($response->json());
         }
 
-        return response()->json([]);
+        return response()->json([
+            'error' => 'Something went wrong'
+        ], 404);
     }
 
     // Get a todo using id
@@ -60,7 +62,7 @@ class TodoController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Update a todo
@@ -78,7 +80,7 @@ class TodoController extends Controller
         if ($validator->fails()){
             return response()->json([
                'Validation error(s)' => $validator->errors()
-            ]);
+            ], 422);
         }
 
         $response = Http::put('https://jsonplaceholder.typicode.com/todos/' . $id, $data);
@@ -89,7 +91,7 @@ class TodoController extends Controller
 
         return response()->json([
             'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Delete a todo using id
@@ -105,6 +107,6 @@ class TodoController extends Controller
 
         return response()->json([
             'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 }

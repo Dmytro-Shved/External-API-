@@ -19,7 +19,7 @@ class AlbumController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Create a new album (id: 101 always)
@@ -47,7 +47,7 @@ class AlbumController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Show album using id
@@ -61,7 +61,7 @@ class AlbumController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Update a new album
@@ -89,7 +89,7 @@ class AlbumController extends Controller
 
         return response()->json([
             'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Delete an album
@@ -105,6 +105,6 @@ class AlbumController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 }

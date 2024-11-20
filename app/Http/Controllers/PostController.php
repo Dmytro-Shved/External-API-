@@ -19,7 +19,7 @@ class PostController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Create a new post (id: 101 always)
@@ -47,7 +47,7 @@ class PostController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Show the post using id
@@ -61,7 +61,7 @@ class PostController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Update the post using id
@@ -89,7 +89,7 @@ class PostController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Delete the post using id
@@ -105,7 +105,7 @@ class PostController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     public function post_comments(string $id)
@@ -118,6 +118,6 @@ class PostController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 }

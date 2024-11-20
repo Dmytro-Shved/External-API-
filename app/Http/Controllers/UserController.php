@@ -66,7 +66,7 @@ class UserController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ], 400);
+        ], 404);
     }
 
     // Get a user using id
@@ -127,7 +127,7 @@ class UserController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong',
-        ]);
+        ], 404);
     }
 
     // Delete user using id
@@ -143,6 +143,6 @@ class UserController extends Controller
 
         return response()->json([
             'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 }

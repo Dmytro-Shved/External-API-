@@ -19,7 +19,7 @@ class CommentController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Create a new comment (id: 501 always)
@@ -49,7 +49,7 @@ class CommentController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Show comment using id
@@ -63,7 +63,7 @@ class CommentController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Update comment using id
@@ -93,7 +93,7 @@ class CommentController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Delete comment using id
@@ -109,7 +109,7 @@ class CommentController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     public function comments_post(string $id)
@@ -124,6 +124,6 @@ class CommentController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 }

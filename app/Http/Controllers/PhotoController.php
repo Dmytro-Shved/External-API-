@@ -19,7 +19,7 @@ class PhotoController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Create a new photo (id: 5001 always)
@@ -49,7 +49,7 @@ class PhotoController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Get a photo using id
@@ -63,7 +63,7 @@ class PhotoController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Update a photo using id
@@ -93,7 +93,7 @@ class PhotoController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 
     // Delete a photo using id
@@ -109,6 +109,6 @@ class PhotoController extends Controller
 
         return response()->json([
            'error' => 'Something went wrong'
-        ]);
+        ], 404);
     }
 }
