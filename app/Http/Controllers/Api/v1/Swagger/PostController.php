@@ -139,7 +139,6 @@ use App\Http\Controllers\Api\v1\Controller;
  *            ),
  *        ),
  *    ),
- *
  */
 class PostController extends Controller
 {

@@ -42,6 +42,213 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Create a new album",
+                "operationId": "6764410c07a5baa6ace8a40f8694734b",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "userId": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Some title"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "userId": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Some title"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/albums/{album}": {
+            "get": {
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Show a specific album",
+                "operationId": "df35934e766cebb8f1d4f6944f774bea",
+                "parameters": [
+                    {
+                        "name": "album",
+                        "in": "path",
+                        "description": "Alhbum's id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "userId": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Some title"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Update a specific album",
+                "operationId": "f3261fe2783d7e912c1000915cc588de",
+                "parameters": [
+                    {
+                        "name": "album",
+                        "in": "path",
+                        "description": "Album's id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "userId": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Title updated"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "userId": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Title updated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Album"
+                ],
+                "summary": "Delete a specific album",
+                "operationId": "d41d07e20d849fae35e682e91b1cdbed",
+                "parameters": [
+                    {
+                        "name": "album",
+                        "in": "path",
+                        "description": "Album's id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "deleted"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/v1/posts": {
