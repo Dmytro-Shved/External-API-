@@ -29,9 +29,10 @@ class PostController extends Controller
         $data = $request->all();
 
         $validator = Validator::make($data, [
-            'title' => 'required|string|min:5|max:100',
-            'body' => 'required|string|min:5|max:255',
             'userId' => 'required|numeric',
+            'title' => 'required|string|min:5|max:100',
+            'id' => 'required|numeric',
+            'body' => 'required|string|min:5|max:255',
         ]);
 
         if ($validator->fails()){
