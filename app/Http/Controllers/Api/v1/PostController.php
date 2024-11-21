@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
+use function Laravel\Prompts\search;
 
 class PostController extends Controller
 {
@@ -151,5 +152,45 @@ class PostController extends Controller
             'message' => 'Showing '. $quantity. ' posts',
             'posts' => $posts
         ], 200);
+    }
+
+    public function posts_keyword(string $keyword)
+    {
+        $response = Http::get('https://jsonplaceholder.typicode.com/posts/');
+
+        if ($response->successful()){
+            $posts = $response->json();
+        }else{
+            return response()->json([
+               'error' => 'Something went wrong'
+            ], 500);
+        }
+
+        $foundPosts = [];
+
+        foreach ($posts as $post){
+            $body = $post["body"];
+
+            if(str_contains($body, $keyword)){
+                $foundPosts[] =[
+                    'id' => $post['id'],
+                    'title' => $post['title'],
+                    'body' => $post['body'],
+                ];
+            }
+        }
+
+        if (count($foundPosts) > 0){
+            return response()->json([
+                'message' => 'Text found',
+                'quantity of posts with text' => count($foundPosts),
+                'status' => 200,
+                'Post(s) with found content(s)' => $foundPosts,
+            ], 200);
+        }
+
+        return response()->json([
+            'error' => "Provided text was not found"
+        ], 404);
     }
 }

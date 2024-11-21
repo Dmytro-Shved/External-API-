@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('/posts', PostController::class);
 Route::get('/posts/{post}/comments', [PostController::class, 'post_comments']);
 Route::get('/posts/quantity/{quantity}', [PostController::class, 'posts_quantity']);
+Route::get('/posts/keyword/{keyword}', [PostController::class, 'posts_keyword']);
 
 // comments
 Route::apiResource('/comments', CommentController::class);
