@@ -43,15 +43,19 @@ use App\Http\Controllers\Api\v1\Controller;
  *
  *      @OA\Response(
  *          response=200,
- *          description="ok",
+ *          description="List of posts",
  *          @OA\JsonContent(
- *              @OA\Property(property="userId", type="integer", example=1),
- *              @OA\Property(property="id", type="integer", example=1),
- *              @OA\Property(property="title", type="string", example="Some title"),
- *              @OA\Property(property="body", type="string", example="Lorem ipsum dolor sit amet."),
- *          ),
- *      ),
- *  ),
+ *              type="array",
+ *              @OA\Items(
+ *                  type="object",
+ *                  @OA\Property(property="userId", type="integer", example=1),
+ *                  @OA\Property(property="id", type="integer", example=1),
+ *                  @OA\Property(property="title", type="string", example="Some title"),
+ *                  @OA\Property(property="body", type="string", example="Lorem ipsum dolor sit amet.")
+ *              )
+ *          )
+ *      )
+ *  )
  *
  * @OA\Get(
  *       path="/api/v1/posts/{post}",

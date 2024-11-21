@@ -6,6 +6,44 @@
     },
     "paths": {
         "/api/v1": {},
+        "/api/v1/albums": {
+            "get": {
+                "tags": [
+                    "Album"
+                ],
+                "summary": "List of all albums",
+                "operationId": "41ea9697bc8de8eefcba48dd41725e83",
+                "responses": {
+                    "200": {
+                        "description": "List of albums",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "userId": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Some album title"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/posts": {
             "get": {
                 "tags": [
@@ -15,29 +53,32 @@
                 "operationId": "835a0dc7ffa5982d69e694d88821e88d",
                 "responses": {
                     "200": {
-                        "description": "ok",
+                        "description": "List of posts",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "userId": {
-                                            "type": "integer",
-                                            "example": 1
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "userId": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Some title"
+                                            },
+                                            "body": {
+                                                "type": "string",
+                                                "example": "Lorem ipsum dolor sit amet."
+                                            }
                                         },
-                                        "id": {
-                                            "type": "integer",
-                                            "example": 1
-                                        },
-                                        "title": {
-                                            "type": "string",
-                                            "example": "Some title"
-                                        },
-                                        "body": {
-                                            "type": "string",
-                                            "example": "Lorem ipsum dolor sit amet."
-                                        }
-                                    },
-                                    "type": "object"
+                                        "type": "object"
+                                    }
                                 }
                             }
                         }
@@ -270,6 +311,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Album",
+            "description": "Album"
+        },
         {
             "name": "Post",
             "description": "Post"
