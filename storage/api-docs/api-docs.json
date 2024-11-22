@@ -40,6 +40,22 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Albums not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -53,32 +69,28 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "allOf": [
-                                    {
-                                        "properties": {
-                                            "userId": {
-                                                "type": "integer",
-                                                "example": 1
-                                            },
-                                            "id": {
-                                                "type": "integer",
-                                                "example": 1
-                                            },
-                                            "title": {
-                                                "type": "string",
-                                                "example": "Some title"
-                                            }
-                                        },
-                                        "type": "object"
+                                "properties": {
+                                    "userId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Some title"
                                     }
-                                ]
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "ok",
+                        "description": "Album created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -94,6 +106,52 @@
                                         "title": {
                                             "type": "string",
                                             "example": "Some title"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error(s)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "status code": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Validation error(s)": {
+                                            "properties": {
+                                                "userId": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The user id field is required."
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The id field is required."
+                                                    }
+                                                },
+                                                "title": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The title field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -115,14 +173,17 @@
                     {
                         "name": "album",
                         "in": "path",
-                        "description": "Alhbum's id",
+                        "description": "Album's id",
                         "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
                         "example": 1
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "ok",
+                        "description": "Album found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -144,6 +205,22 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Album not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Album not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -159,6 +236,9 @@
                         "in": "path",
                         "description": "Album's id",
                         "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
                         "example": 1
                     }
                 ],
@@ -166,32 +246,28 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "allOf": [
-                                    {
-                                        "properties": {
-                                            "userId": {
-                                                "type": "integer",
-                                                "example": 1
-                                            },
-                                            "id": {
-                                                "type": "integer",
-                                                "example": 1
-                                            },
-                                            "title": {
-                                                "type": "string",
-                                                "example": "Title updated"
-                                            }
-                                        },
-                                        "type": "object"
+                                "properties": {
+                                    "userId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Title updated"
                                     }
-                                ]
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "updated",
+                        "description": "Album updated successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -213,6 +289,52 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation error(s)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "status code": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Validation error(s)": {
+                                            "properties": {
+                                                "userId": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The user id field is required."
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The id field is required."
+                                                    }
+                                                },
+                                                "title": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The title field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -228,6 +350,183 @@
                         "in": "path",
                         "description": "Album's id",
                         "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Album deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Deleted album with id 1"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Album not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Album not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/comments": {
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "List of all comments",
+                "operationId": "6f6135f69be6fdcf9f2d5a662982c107",
+                "responses": {
+                    "200": {
+                        "description": "List of albums",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "postId": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Lorem ipsum"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "example@email.com"
+                                            },
+                                            "body": {
+                                                "type": "string",
+                                                "example": "Blanditiis corporis dolore dolorem eaque fuga"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Create a new comment",
+                "operationId": "893295f958c5d7af0be6146162c74990",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "postId": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "New comment"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "newexample@email.com"
+                                            },
+                                            "body": {
+                                                "type": "string",
+                                                "example": "New post"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "postId": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "New comment"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "newexample@email.com"
+                                        },
+                                        "body": {
+                                            "type": "string",
+                                            "example": "New post"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/comments/{comment}": {
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Show a specific comment",
+                "operationId": "bb1f108eef9515d0d7749f362aa04e76",
+                "parameters": [
+                    {
+                        "name": "comment",
+                        "in": "path",
+                        "description": "Comment's id",
+                        "required": true,
                         "example": 1
                     }
                 ],
@@ -238,9 +537,153 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
+                                        "postId": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
                                             "type": "string",
-                                            "example": "deleted"
+                                            "example": "New comment"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "newexample@email.com"
+                                        },
+                                        "body": {
+                                            "type": "string",
+                                            "example": "New post"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/comments/{id}": {
+            "put": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Update a specific comment",
+                "operationId": "6867492787de7ddfdd8b49a22c2ef812",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the comment to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Data for updating the comment",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "postId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Some name"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "example@email.com"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "Lorem ipsum dolor sit amet."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Comment updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "postId": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Some name"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "example@email.com"
+                                        },
+                                        "body": {
+                                            "type": "string",
+                                            "example": "Lorem ipsum dolor sit amet."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error(s)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "status code": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Validation error(s)": {
+                                            "type": "object",
+                                            "additionalProperties": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Comment not found or something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
                                         }
                                     },
                                     "type": "object"
@@ -289,6 +732,22 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -331,11 +790,19 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "ok",
+                        "description": "Post created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "userId": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 101
+                                        },
                                         "title": {
                                             "type": "string",
                                             "example": "Some title"
@@ -343,10 +810,46 @@
                                         "body": {
                                             "type": "string",
                                             "example": "Lorem ipsum dolor sit amet."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error(s)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
                                         },
-                                        "userId": {
+                                        "status code": {
                                             "type": "integer",
-                                            "example": 1
+                                            "example": 422
+                                        },
+                                        "Validation error(s)": {
+                                            "type": "object",
+                                            "additionalProperties": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
                                         }
                                     },
                                     "type": "object"
@@ -375,7 +878,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "ok",
+                        "description": "Post found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -395,6 +898,22 @@
                                         "body": {
                                             "type": "string",
                                             "example": "Lorem ipsum dolor sit amet."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Post not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Post not found"
                                         }
                                     },
                                     "type": "object"
@@ -436,11 +955,11 @@
                                             },
                                             "title": {
                                                 "type": "string",
-                                                "example": "Title updated"
+                                                "example": "Updated title"
                                             },
                                             "body": {
                                                 "type": "string",
-                                                "example": "Lorem ipsum dolor sit amet updated."
+                                                "example": "Updated body content."
                                             }
                                         },
                                         "type": "object"
@@ -452,7 +971,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "updated",
+                        "description": "Post updated successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -467,11 +986,51 @@
                                         },
                                         "title": {
                                             "type": "string",
-                                            "example": "Title updated"
+                                            "example": "Updated title"
                                         },
                                         "body": {
                                             "type": "string",
-                                            "example": "Lorem ipsum dolor sit amet updated."
+                                            "example": "Updated body content."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error(s)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "status code": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Validation error(s)": {
+                                            "type": "object",
+                                            "additionalProperties": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
                                         }
                                     },
                                     "type": "object"
@@ -498,85 +1057,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "ok",
+                        "description": "Post deleted successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "deleted"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/posts/keyword/{keyword}": {
-            "get": {
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Displays posts containing a specific keyword",
-                "operationId": "2c7eba5a6e115574bad5d1f307187c7e",
-                "parameters": [
-                    {
-                        "name": "keyword",
-                        "in": "path",
-                        "description": "Keyword to search in posts",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "alias"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Text found"
-                                        },
-                                        "quantity of posts with text": {
-                                            "type": "integer",
-                                            "example": 5
-                                        },
-                                        "status": {
-                                            "type": "integer",
-                                            "example": 200
-                                        },
-                                        "Post(s) with found content(s)": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "userId": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 5
-                                                    },
-                                                    "title": {
-                                                        "type": "string",
-                                                        "example": "nesciunt quas odio"
-                                                    },
-                                                    "body": {
-                                                        "type": "string",
-                                                        "example": "repudiandae veniam quaerat sunt sed alias aut fugiat sit autem sed est voluptatem omnis possimus esse voluptatibus quis est aut tenetur dolor neque"
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
+                                            "example": "Deleted"
                                         }
                                     },
                                     "type": "object"
@@ -585,14 +1073,30 @@
                         }
                     },
                     "404": {
-                        "description": "No posts found",
+                        "description": "Post not found",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
                                             "type": "string",
-                                            "example": "Provided text was not found"
+                                            "example": "Post not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
                                         }
                                     },
                                     "type": "object"
@@ -608,7 +1112,7 @@
                 "tags": [
                     "Post"
                 ],
-                "summary": "Displays specific number of posts",
+                "summary": "Display a specific number of posts",
                 "operationId": "fa1343b5ec3af3486d67456a9cff6f63",
                 "parameters": [
                     {
@@ -619,12 +1123,12 @@
                         "schema": {
                             "type": "integer"
                         },
-                        "example": "1"
+                        "example": "3"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "ok",
+                        "description": "Successfully fetched posts",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -682,70 +1186,72 @@
                 }
             }
         },
-        "/api/v1/posts/{post}/comments": {
+        "/api/v1/posts/search/{title}": {
             "get": {
                 "tags": [
                     "Post"
                 ],
-                "summary": "List of comments for specific post",
-                "operationId": "1e3ad07be3678ea91da03cb41990fd3f",
+                "summary": "Search posts by title",
+                "operationId": "2c9195285fe2f7327ff385b82ebc4175",
                 "parameters": [
                     {
-                        "name": "post",
+                        "name": "title",
                         "in": "path",
-                        "description": "Post's id",
+                        "description": "Post title to search for",
                         "required": true,
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "example": "1"
+                        "example": "qui est esse"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success",
+                        "description": "Successfully fetched posts",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "postId": {
-                                                "type": "integer",
-                                                "example": 3
-                                            },
-                                            "id": {
-                                                "type": "integer",
-                                                "example": 11
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "example": "fugit labore quia mollitia quas deserunt nostrum sunt"
-                                            },
-                                            "email": {
-                                                "type": "string",
-                                                "example": "Veronica_Goodwin@timmothy.net"
-                                            },
-                                            "body": {
-                                                "type": "string",
-                                                "example": "ut dolorum nostrum id quia aut est\\nfuga est inventore vel eligendi explicabo quis consectetur\\naut occaecati repellat id natus quo est\\nut blanditiis quia ut vel ut maiores ea"
-                                            }
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Posts found"
                                         },
-                                        "type": "object"
-                                    }
+                                        "posts": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "userId": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "qui est esse"
+                                                    },
+                                                    "body": {
+                                                        "type": "string",
+                                                        "example": "est rerum tempore vitae sequi sint nihil reprehenderit dolorum omnis mollitia"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "No comments found",
+                        "description": "No posts found with that title",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
                                             "type": "string",
-                                            "example": "No comments available"
+                                            "example": "No posts found"
                                         }
                                     },
                                     "type": "object"
@@ -761,6 +1267,10 @@
         {
             "name": "Album",
             "description": "Album"
+        },
+        {
+            "name": "Comment",
+            "description": "Comment"
         },
         {
             "name": "Post",
