@@ -174,6 +174,7 @@ class PostController extends Controller
 
             if(str_contains($body, $keyword)){
                 $foundPosts[] =[
+                    'userId' => $post['userId'],
                     'id' => $post['id'],
                     'title' => $post['title'],
                     'body' => $post['body'],
