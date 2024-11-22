@@ -268,16 +268,16 @@ use App\Http\Controllers\Api\v1\Controller;
  * )
  *
  * @OA\Get(
- *     path="/api/v1/posts/search/{title}",
- *     summary="Search posts by title",
+ *     path="/api/v1/posts/keyword/{keyword}",
+ *     summary="Search posts by text in post's body",
  *     tags={"Post"},
  *
  *     @OA\Parameter(
- *         description="Post title to search for",
+ *         description="Text by which the post will be found",
  *         in="path",
- *         name="title",
+ *         name="keyword",
  *         required=true,
- *         example="qui est esse"
+ *         example="alias"
  *     ),
  *
  *     @OA\Response(
@@ -291,8 +291,8 @@ use App\Http\Controllers\Api\v1\Controller;
  *                 @OA\Items(
  *                     @OA\Property(property="userId", type="integer", example=1),
  *                     @OA\Property(property="id", type="integer", example=6),
- *                     @OA\Property(property="title", type="string", example="qui est esse"),
- *                     @OA\Property(property="body", type="string", example="est rerum tempore vitae sequi sint nihil reprehenderit dolor beatae ea dolores neque facere repellat praesentium nihil")
+ *                     @OA\Property(property="title", type="string", example="nesciunt quas odio"),
+ *                     @OA\Property(property="body", type="string", example="repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque")
  *                 )
  *             )
  *         )

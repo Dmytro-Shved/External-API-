@@ -1971,20 +1971,20 @@
                 }
             }
         },
-        "/api/v1/posts/search/{title}": {
+        "/api/v1/posts/keyword/{keyword}": {
             "get": {
                 "tags": [
                     "Post"
                 ],
-                "summary": "Search posts by title",
-                "operationId": "2c9195285fe2f7327ff385b82ebc4175",
+                "summary": "Search posts by text in post's body",
+                "operationId": "2c7eba5a6e115574bad5d1f307187c7e",
                 "parameters": [
                     {
-                        "name": "title",
+                        "name": "keyword",
                         "in": "path",
-                        "description": "Post title to search for",
+                        "description": "Text by which the post will be found",
                         "required": true,
-                        "example": "qui est esse"
+                        "example": "alias"
                     }
                 ],
                 "responses": {
@@ -2012,11 +2012,11 @@
                                                     },
                                                     "title": {
                                                         "type": "string",
-                                                        "example": "qui est esse"
+                                                        "example": "nesciunt quas odio"
                                                     },
                                                     "body": {
                                                         "type": "string",
-                                                        "example": "est rerum tempore vitae sequi sint nihil reprehenderit dolor beatae ea dolores neque facere repellat praesentium nihil"
+                                                        "example": "repudiandae veniam quaerat sunt sed\\nalias aut fugiat sit autem sed est\\nvoluptatem omnis possimus esse voluptatibus quis\\nest aut tenetur dolor neque"
                                                     }
                                                 },
                                                 "type": "object"
@@ -2504,6 +2504,943 @@
                     }
                 }
             }
+        },
+        "/api/v1/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "List of all users",
+                "operationId": "275771c05d6279d3b35265e60b2effcc",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Leanne Graham"
+                                            },
+                                            "username": {
+                                                "type": "string",
+                                                "example": "Bret"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "Sincere@april.biz"
+                                            },
+                                            "address": {
+                                                "properties": {
+                                                    "street": {
+                                                        "type": "string",
+                                                        "example": "Kulas Light"
+                                                    },
+                                                    "suite": {
+                                                        "type": "string",
+                                                        "example": "Apt. 556"
+                                                    },
+                                                    "city": {
+                                                        "type": "string",
+                                                        "example": "Gwenborough"
+                                                    },
+                                                    "zipcode": {
+                                                        "type": "string",
+                                                        "example": "92998-3874"
+                                                    },
+                                                    "geo": {
+                                                        "properties": {
+                                                            "lat": {
+                                                                "type": "string",
+                                                                "example": "-37.3159"
+                                                            },
+                                                            "lng": {
+                                                                "type": "string",
+                                                                "example": "81.1496"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "phone": {
+                                                "type": "string",
+                                                "example": "1-770-736-8031 x56442"
+                                            },
+                                            "website": {
+                                                "type": "string",
+                                                "example": "hildegard.org"
+                                            },
+                                            "company": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Romaguera-Crona"
+                                                    },
+                                                    "catchPhrase": {
+                                                        "type": "string",
+                                                        "example": "Multi-layered client-server neural-net"
+                                                    },
+                                                    "bs": {
+                                                        "type": "string",
+                                                        "example": "harness real-time e-markets"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user",
+                "operationId": "d23b37213cfdf246b1d745b8949867e9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Leanne Graham"
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "example": "Bret"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "Sincere@april.biz"
+                                    },
+                                    "address": {
+                                        "properties": {
+                                            "street": {
+                                                "type": "string",
+                                                "example": "Kulas Light"
+                                            },
+                                            "suite": {
+                                                "type": "string",
+                                                "example": "Apt. 556"
+                                            },
+                                            "city": {
+                                                "type": "string",
+                                                "example": "Gwenborough"
+                                            },
+                                            "zipcode": {
+                                                "type": "string",
+                                                "example": "92998-3874"
+                                            },
+                                            "geo": {
+                                                "properties": {
+                                                    "lat": {
+                                                        "type": "string",
+                                                        "example": "-37.3159"
+                                                    },
+                                                    "lng": {
+                                                        "type": "string",
+                                                        "example": "81.1496"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "1-770-736-8031 x56442"
+                                    },
+                                    "website": {
+                                        "type": "string",
+                                        "example": "hildegard.org"
+                                    },
+                                    "company": {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Romaguera-Crona"
+                                            },
+                                            "catchPhrase": {
+                                                "type": "string",
+                                                "example": "Multi-layered client-server neural-net"
+                                            },
+                                            "bs": {
+                                                "type": "string",
+                                                "example": "harness real-time e-markets"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 11
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Leanne Graham"
+                                        },
+                                        "username": {
+                                            "type": "string",
+                                            "example": "Bret"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "Sincere@april.biz"
+                                        },
+                                        "address": {
+                                            "properties": {
+                                                "street": {
+                                                    "type": "string",
+                                                    "example": "Kulas Light"
+                                                },
+                                                "suite": {
+                                                    "type": "string",
+                                                    "example": "Apt. 556"
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "Gwenborough"
+                                                },
+                                                "zipcode": {
+                                                    "type": "string",
+                                                    "example": "92998-3874"
+                                                },
+                                                "geo": {
+                                                    "properties": {
+                                                        "lat": {
+                                                            "type": "string",
+                                                            "example": "-37.3159"
+                                                        },
+                                                        "lng": {
+                                                            "type": "string",
+                                                            "example": "81.1496"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "phone": {
+                                            "type": "string",
+                                            "example": "1-770-736-8031 x56442"
+                                        },
+                                        "website": {
+                                            "type": "string",
+                                            "example": "hildegard.org"
+                                        },
+                                        "company": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Romaguera-Crona"
+                                                },
+                                                "catchPhrase": {
+                                                    "type": "string",
+                                                    "example": "Multi-layered client-server neural-net"
+                                                },
+                                                "bs": {
+                                                    "type": "string",
+                                                    "example": "harness real-time e-markets"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error(s)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "status code": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Validation error(s)": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    }
+                                                },
+                                                "username": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The username field is required."
+                                                    }
+                                                },
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required."
+                                                    }
+                                                },
+                                                "address": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address field is required."
+                                                    }
+                                                },
+                                                "address.street": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address.street field is required."
+                                                    }
+                                                },
+                                                "address.suite": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address.suite field is required."
+                                                    }
+                                                },
+                                                "address.city": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address.city field is required."
+                                                    }
+                                                },
+                                                "address.zipcode": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address.zipcode field is required."
+                                                    }
+                                                },
+                                                "address.geo": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address.geo field is required."
+                                                    }
+                                                },
+                                                "address.geo.lat": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address.geo.lat field is required."
+                                                    }
+                                                },
+                                                "address.geo.lng": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address.geo.lng field is required."
+                                                    }
+                                                },
+                                                "phone": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The phone field is required."
+                                                    }
+                                                },
+                                                "website": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The website field is required."
+                                                    }
+                                                },
+                                                "company": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The company field is required."
+                                                    }
+                                                },
+                                                "company.name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The company.name field is required."
+                                                    }
+                                                },
+                                                "company.catchPhrase": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The company.catch phrase field is required."
+                                                    }
+                                                },
+                                                "company.bs": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The company.bs field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Show a specific user",
+                "operationId": "bf69b44f1116008f52f72ab3305cc3f4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User fetched successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Leanne Graham"
+                                        },
+                                        "username": {
+                                            "type": "string",
+                                            "example": "Bret"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "Sincere@april.biz"
+                                        },
+                                        "address": {
+                                            "properties": {
+                                                "street": {
+                                                    "type": "string",
+                                                    "example": "Kulas Light"
+                                                },
+                                                "suite": {
+                                                    "type": "string",
+                                                    "example": "Apt. 556"
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "Gwenborough"
+                                                },
+                                                "zipcode": {
+                                                    "type": "string",
+                                                    "example": "92998-3874"
+                                                },
+                                                "geo": {
+                                                    "properties": {
+                                                        "lat": {
+                                                            "type": "string",
+                                                            "example": "-37.3159"
+                                                        },
+                                                        "lng": {
+                                                            "type": "string",
+                                                            "example": "81.1496"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "phone": {
+                                            "type": "string",
+                                            "example": "1-770-736-8031 x56442"
+                                        },
+                                        "website": {
+                                            "type": "string",
+                                            "example": "hildegard.org"
+                                        },
+                                        "company": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Romaguera-Crona"
+                                                },
+                                                "catchPhrase": {
+                                                    "type": "string",
+                                                    "example": "Multi-layered client-server neural-net"
+                                                },
+                                                "bs": {
+                                                    "type": "string",
+                                                    "example": "harness real-time e-markets"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update a specific user",
+                "operationId": "97e4efe2cdfe2332f5f8d4b6f7b44fac",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Leanne Graham"
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "example": "Bret"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "Sincere@april.biz"
+                                    },
+                                    "address": {
+                                        "properties": {
+                                            "street": {
+                                                "type": "string",
+                                                "example": "Kulas Light"
+                                            },
+                                            "suite": {
+                                                "type": "string",
+                                                "example": "Apt. 556"
+                                            },
+                                            "city": {
+                                                "type": "string",
+                                                "example": "Gwenborough"
+                                            },
+                                            "zipcode": {
+                                                "type": "string",
+                                                "example": "92998-3874"
+                                            },
+                                            "geo": {
+                                                "properties": {
+                                                    "lat": {
+                                                        "type": "string",
+                                                        "example": "-37.3159"
+                                                    },
+                                                    "lng": {
+                                                        "type": "string",
+                                                        "example": "81.1496"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "1-770-736-8031 x56442"
+                                    },
+                                    "website": {
+                                        "type": "string",
+                                        "example": "hildegard.org"
+                                    },
+                                    "company": {
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Romaguera-Crona"
+                                            },
+                                            "catchPhrase": {
+                                                "type": "string",
+                                                "example": "Multi-layered client-server neural-net"
+                                            },
+                                            "bs": {
+                                                "type": "string",
+                                                "example": "harness real-time e-markets"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Leanne Graham"
+                                        },
+                                        "username": {
+                                            "type": "string",
+                                            "example": "Bret"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "Sincere@april.biz"
+                                        },
+                                        "address": {
+                                            "properties": {
+                                                "street": {
+                                                    "type": "string",
+                                                    "example": "Kulas Light"
+                                                },
+                                                "suite": {
+                                                    "type": "string",
+                                                    "example": "Apt. 556"
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "Gwenborough"
+                                                },
+                                                "zipcode": {
+                                                    "type": "string",
+                                                    "example": "92998-3874"
+                                                },
+                                                "geo": {
+                                                    "properties": {
+                                                        "lat": {
+                                                            "type": "string",
+                                                            "example": "-37.3159"
+                                                        },
+                                                        "lng": {
+                                                            "type": "string",
+                                                            "example": "81.1496"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "phone": {
+                                            "type": "string",
+                                            "example": "1-770-736-8031 x56442"
+                                        },
+                                        "website": {
+                                            "type": "string",
+                                            "example": "hildegard.org"
+                                        },
+                                        "company": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Romaguera-Crona"
+                                                },
+                                                "catchPhrase": {
+                                                    "type": "string",
+                                                    "example": "Multi-layered client-server neural-net"
+                                                },
+                                                "bs": {
+                                                    "type": "string",
+                                                    "example": "harness real-time e-markets"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error(s)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "status code": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Validation error(s)": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    }
+                                                },
+                                                "username": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The username field is required."
+                                                    }
+                                                },
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field must be a valid email address."
+                                                    }
+                                                },
+                                                "address.street": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address.street field is required."
+                                                    }
+                                                },
+                                                "address.geo.lat": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The address.geo.lat field is required."
+                                                    }
+                                                },
+                                                "phone": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The phone field is required."
+                                                    }
+                                                },
+                                                "website": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The website field is required."
+                                                    }
+                                                },
+                                                "company.name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The company.name field is required."
+                                                    }
+                                                },
+                                                "company.catchPhrase": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The company.catchPhrase field is required."
+                                                    }
+                                                },
+                                                "company.bs": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The company.bs field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete a specific user",
+                "operationId": "c3d9077b4fed97e382cc7838483e8c14",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Deleted user with id 1"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "tags": [
@@ -2526,6 +3463,10 @@
         {
             "name": "Todo",
             "description": "Todo"
+        },
+        {
+            "name": "User",
+            "description": "User"
         }
     ]
 }
