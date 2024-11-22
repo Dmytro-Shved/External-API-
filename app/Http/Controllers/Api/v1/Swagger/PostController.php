@@ -73,7 +73,7 @@ use App\Http\Controllers\Api\v1\Controller;
  *
  *     @OA\Response(
  *         response=200,
- *         description="List of posts",
+ *         description="List of all posts",
  *         @OA\JsonContent(
  *             type="array",
  *             @OA\Items(

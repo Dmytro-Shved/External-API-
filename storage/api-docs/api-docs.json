@@ -945,6 +945,501 @@
                 }
             }
         },
+        "/api/v1/photos": {
+            "get": {
+                "tags": [
+                    "Photo"
+                ],
+                "summary": "List of all photos",
+                "operationId": "a434e3a602448e93510287eb8c34d1c4",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "albumId": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Sample photo title"
+                                            },
+                                            "url": {
+                                                "type": "string",
+                                                "example": "https://via.placeholder.com/600/92c952"
+                                            },
+                                            "thumbnailUrl": {
+                                                "type": "string",
+                                                "example": "https://via.placeholder.com/150/92c952"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Photo"
+                ],
+                "summary": "Create a new photo",
+                "operationId": "dd7b6f98fc8d3453d4d49d9cf8acebdd",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "albumId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Some title"
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "example": "https://via.placeholder.com/600/92c952"
+                                    },
+                                    "thumbnailUrl": {
+                                        "type": "string",
+                                        "example": "https://via.placeholder.com/150/92c952"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Photo created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "albumId": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Some title"
+                                        },
+                                        "url": {
+                                            "type": "string",
+                                            "example": "https://via.placeholder.com/600/92c952"
+                                        },
+                                        "thumbnailUrl": {
+                                            "type": "string",
+                                            "example": "https://via.placeholder.com/150/92c952"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error(s)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "status code": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Validation error(s)": {
+                                            "properties": {
+                                                "albumId": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The albumId field is required."
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The id field is required."
+                                                    }
+                                                },
+                                                "title": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The title field is required."
+                                                    }
+                                                },
+                                                "url": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The url field is required."
+                                                    }
+                                                },
+                                                "thumbnailUrl": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The thumbnail url field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Something went wrong or resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/photos/{photo}": {
+            "get": {
+                "tags": [
+                    "Photo"
+                ],
+                "summary": "Show a specific photo",
+                "operationId": "69d2e1d7ed47cf3f87298841ff8010f0",
+                "parameters": [
+                    {
+                        "name": "photo",
+                        "in": "path",
+                        "description": "Photo's id",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Photo found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "albumId": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Sample photo title"
+                                        },
+                                        "url": {
+                                            "type": "string",
+                                            "example": "https://via.placeholder.com/600/92c952"
+                                        },
+                                        "thumbnailUrl": {
+                                            "type": "string",
+                                            "example": "https://via.placeholder.com/150/92c952"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Photo not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Photo not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/photos/{id}": {
+            "put": {
+                "tags": [
+                    "Photo"
+                ],
+                "summary": "Update a specific photo",
+                "operationId": "533ce5bc44c474e69c67c3d9bcb53e74",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Photo's id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "albumId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 101
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Updated photo title"
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "example": "https://example.com/updated-photo.jpg"
+                                    },
+                                    "thumbnailUrl": {
+                                        "type": "string",
+                                        "example": "https://example.com/updated-thumbnail.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Photo updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "albumId": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 101
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Updated photo title"
+                                        },
+                                        "url": {
+                                            "type": "string",
+                                            "example": "https://example.com/updated-photo.jpg"
+                                        },
+                                        "thumbnailUrl": {
+                                            "type": "string",
+                                            "example": "https://example.com/updated-thumbnail.jpg"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error(s)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "status code": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Validation error(s)": {
+                                            "properties": {
+                                                "albumId": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The albumId field is required."
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The id field is required."
+                                                    }
+                                                },
+                                                "title": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The title field is required."
+                                                    }
+                                                },
+                                                "url": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The url field is required."
+                                                    }
+                                                },
+                                                "thumbnailUrl": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The thumbnail url field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found or something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Photo"
+                ],
+                "summary": "Delete a specific photo",
+                "operationId": "2a3a1813c02d3ad7a8ad6ea107a750d0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Photo's id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Photo deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Deleted photo with id 1"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Photo not found or something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/posts": {
             "get": {
                 "tags": [
@@ -954,7 +1449,7 @@
                 "operationId": "835a0dc7ffa5982d69e694d88821e88d",
                 "responses": {
                     "200": {
-                        "description": "List of posts",
+                        "description": "List of all posts",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1561,6 +2056,10 @@
         {
             "name": "Comment",
             "description": "Comment"
+        },
+        {
+            "name": "Photo",
+            "description": "Photo"
         },
         {
             "name": "Post",
