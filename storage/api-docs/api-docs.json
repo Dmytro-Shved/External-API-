@@ -401,7 +401,7 @@
                 "operationId": "6f6135f69be6fdcf9f2d5a662982c107",
                 "responses": {
                     "200": {
-                        "description": "List of albums",
+                        "description": "List of comments",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -434,6 +434,22 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -447,40 +463,36 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "allOf": [
-                                    {
-                                        "properties": {
-                                            "postId": {
-                                                "type": "integer",
-                                                "example": 1
-                                            },
-                                            "id": {
-                                                "type": "integer",
-                                                "example": 1
-                                            },
-                                            "name": {
-                                                "type": "string",
-                                                "example": "New comment"
-                                            },
-                                            "email": {
-                                                "type": "string",
-                                                "example": "newexample@email.com"
-                                            },
-                                            "body": {
-                                                "type": "string",
-                                                "example": "New post"
-                                            }
-                                        },
-                                        "type": "object"
+                                "properties": {
+                                    "postId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 501
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "New comment"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "newexample@email.com"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "New post"
                                     }
-                                ]
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "ok",
+                        "description": "Comment created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -491,7 +503,7 @@
                                         },
                                         "id": {
                                             "type": "integer",
-                                            "example": 1
+                                            "example": 501
                                         },
                                         "name": {
                                             "type": "string",
@@ -504,6 +516,66 @@
                                         "body": {
                                             "type": "string",
                                             "example": "New post"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error(s)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "status code": {
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "Validation error(s)": {
+                                            "properties": {
+                                                "postId": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The postId field is required."
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The id field is required."
+                                                    }
+                                                },
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    }
+                                                },
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required."
+                                                    }
+                                                },
+                                                "body": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The body field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -562,6 +634,22 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Comment not found or something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -602,15 +690,15 @@
                                     },
                                     "name": {
                                         "type": "string",
-                                        "example": "Some name"
+                                        "example": "Updated comment"
                                     },
                                     "email": {
                                         "type": "string",
-                                        "example": "example@email.com"
+                                        "example": "updatedemail@email.com"
                                     },
                                     "body": {
                                         "type": "string",
-                                        "example": "Lorem ipsum dolor sit amet."
+                                        "example": "Updated body"
                                     }
                                 },
                                 "type": "object"
@@ -635,15 +723,15 @@
                                         },
                                         "name": {
                                             "type": "string",
-                                            "example": "Some name"
+                                            "example": "Updated comment"
                                         },
                                         "email": {
                                             "type": "string",
-                                            "example": "example@email.com"
+                                            "example": "updatedemail@email.com"
                                         },
                                         "body": {
                                             "type": "string",
-                                            "example": "Lorem ipsum dolor sit amet."
+                                            "example": "Updated body"
                                         }
                                     },
                                     "type": "object"
@@ -666,8 +754,44 @@
                                             "example": 422
                                         },
                                         "Validation error(s)": {
-                                            "type": "object",
-                                            "additionalProperties": []
+                                            "properties": {
+                                                "postId": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The postId field is required."
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The id field is required."
+                                                    }
+                                                },
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The name field is required."
+                                                    }
+                                                },
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email field is required."
+                                                    }
+                                                },
+                                                "body": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The body field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -677,6 +801,133 @@
                     },
                     "404": {
                         "description": "Comment not found or something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Delete a specific comment",
+                "operationId": "7e390b1b17dd390da4150c4fd21bfa78",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the comment to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comment deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Deleted comment with id 1"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Something went wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/comments/post/{id}": {
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "List comments for a specific post",
+                "operationId": "e63a41e7c51eb24babe334b6b77dd8f0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the post to fetch comments for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of comments for the specified post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "postId": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Lorem ipsum"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "example": "example@email.com"
+                                            },
+                                            "body": {
+                                                "type": "string",
+                                                "example": "Blanditiis corporis dolore dolorem eaque fuga"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Something went wrong",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -733,8 +984,8 @@
                             }
                         }
                     },
-                    "500": {
-                        "description": "Internal server error",
+                    "404": {
+                        "description": "Something went wrong",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -770,7 +1021,7 @@
                                             },
                                             "id": {
                                                 "type": "integer",
-                                                "example": 1
+                                                "example": 101
                                             },
                                             "title": {
                                                 "type": "string",
@@ -832,8 +1083,37 @@
                                             "example": 422
                                         },
                                         "Validation error(s)": {
-                                            "type": "object",
-                                            "additionalProperties": []
+                                            "properties": {
+                                                "userId": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The user id field is required."
+                                                    }
+                                                },
+                                                "title": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The title field is required."
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The id field is required."
+                                                    }
+                                                },
+                                                "body": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The body field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -841,8 +1121,8 @@
                             }
                         }
                     },
-                    "500": {
-                        "description": "Internal server error",
+                    "404": {
+                        "description": "Something went wrong",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -951,7 +1231,7 @@
                                             },
                                             "id": {
                                                 "type": "integer",
-                                                "example": 1
+                                                "example": 101
                                             },
                                             "title": {
                                                 "type": "string",
@@ -982,7 +1262,7 @@
                                         },
                                         "id": {
                                             "type": "integer",
-                                            "example": 1
+                                            "example": 101
                                         },
                                         "title": {
                                             "type": "string",
@@ -1013,8 +1293,37 @@
                                             "example": 422
                                         },
                                         "Validation error(s)": {
-                                            "type": "object",
-                                            "additionalProperties": []
+                                            "properties": {
+                                                "userId": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The user id field is required."
+                                                    }
+                                                },
+                                                "title": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The title field is required."
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The id field is required."
+                                                    }
+                                                },
+                                                "body": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The body field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -1022,8 +1331,8 @@
                             }
                         }
                     },
-                    "500": {
-                        "description": "Internal server error",
+                    "404": {
+                        "description": "Something went wrong",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1064,7 +1373,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Deleted"
+                                            "example": "Deleted post with id 1"
                                         }
                                     },
                                     "type": "object"
@@ -1081,22 +1390,6 @@
                                         "error": {
                                             "type": "string",
                                             "example": "Post not found"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Something went wrong"
                                         }
                                     },
                                     "type": "object"
@@ -1120,10 +1413,7 @@
                         "in": "path",
                         "description": "Quantity of posts",
                         "required": true,
-                        "schema": {
-                            "type": "integer"
-                        },
-                        "example": "3"
+                        "example": 3
                     }
                 ],
                 "responses": {
@@ -1211,7 +1501,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Posts found"
+                                            "example": "Found posts matching the title 'qui est esse'"
                                         },
                                         "posts": {
                                             "type": "array",
@@ -1223,7 +1513,7 @@
                                                     },
                                                     "id": {
                                                         "type": "integer",
-                                                        "example": 3
+                                                        "example": 6
                                                     },
                                                     "title": {
                                                         "type": "string",
@@ -1231,7 +1521,7 @@
                                                     },
                                                     "body": {
                                                         "type": "string",
-                                                        "example": "est rerum tempore vitae sequi sint nihil reprehenderit dolorum omnis mollitia"
+                                                        "example": "est rerum tempore vitae sequi sint nihil reprehenderit dolor beatae ea dolores neque facere repellat praesentium nihil"
                                                     }
                                                 },
                                                 "type": "object"
@@ -1244,7 +1534,7 @@
                         }
                     },
                     "404": {
-                        "description": "No posts found with that title",
+                        "description": "No posts found",
                         "content": {
                             "application/json": {
                                 "schema": {

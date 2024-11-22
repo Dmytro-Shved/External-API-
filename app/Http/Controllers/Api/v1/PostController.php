@@ -145,7 +145,7 @@ class PostController extends Controller
             }else{
                 return response()->json([
                    'error' => 'Something went wrong'
-                ], 500);
+                ], 404);
             }
         }
 

@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\v1\Controller;
  *
  *       @OA\Response(
  *           response=200,
- *           description="List of albums",
+ *           description="List of comments",
  *           @OA\JsonContent(
  *               type="array",
  *               @OA\Items(
@@ -21,8 +21,16 @@ use App\Http\Controllers\Api\v1\Controller;
  *                   @OA\Property(property="id", type="integer", example=1),
  *                   @OA\Property(property="name", type="string", example="Lorem ipsum"),
  *                   @OA\Property(property="email", type="string", example="example@email.com"),
- *                   @OA\Property(property="body", type="string", example="Blanditiis corporis dolore dolorem eaque fuga"),
- *               ),
+ *                   @OA\Property(property="body", type="string", example="Blanditiis corporis dolore dolorem eaque fuga")
+ *               )
+ *           )
+ *       ),
+ *
+ *       @OA\Response(
+ *           response=404,
+ *           description="Something went wrong",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="error", type="string", example="Something went wrong")
  *           )
  *       )
  *   ),
@@ -34,29 +42,41 @@ use App\Http\Controllers\Api\v1\Controller;
  *
  *       @OA\RequestBody(
  *           @OA\JsonContent(
- *               allOf={
- *                   @OA\Schema(
- *                       @OA\Property(property="postId", type="integer", example=1),
- *                       @OA\Property(property="id", type="integer", example=1),
- *                       @OA\Property(property="name", type="string", example="New comment"),
- *                       @OA\Property(property="email", type="string", example="newexample@email.com"),
- *                       @OA\Property(property="body", type="string", example="New post"),
- *                   )
- *               }
+ *               @OA\Property(property="postId", type="integer", example=1),
+ *               @OA\Property(property="id", type="integer", example=501),
+ *               @OA\Property(property="name", type="string", example="New comment"),
+ *               @OA\Property(property="email", type="string", example="newexample@email.com"),
+ *               @OA\Property(property="body", type="string", example="New post")
  *           )
  *       ),
  *
  *       @OA\Response(
  *           response=200,
- *           description="ok",
+ *           description="Comment created successfully",
  *           @OA\JsonContent(
  *               @OA\Property(property="postId", type="integer", example=1),
- *               @OA\Property(property="id", type="integer", example=1),
+ *               @OA\Property(property="id", type="integer", example=501),
  *               @OA\Property(property="name", type="string", example="New comment"),
  *               @OA\Property(property="email", type="string", example="newexample@email.com"),
- *               @OA\Property(property="body", type="string", example="New post"),
- *           ),
+ *               @OA\Property(property="body", type="string", example="New post")
+ *           )
  *       ),
+ *
+ *       @OA\Response(
+ *           response=422,
+ *           description="Validation error(s)",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="status", type="string", example="error"),
+ *               @OA\Property(property="status code", type="integer", example=422),
+ *               @OA\Property(property="Validation error(s)", type="object",
+ *                   @OA\Property(property="postId", type="array", @OA\Items(type="string", example="The postId field is required.")),
+ *                   @OA\Property(property="id", type="array", @OA\Items(type="string", example="The id field is required.")),
+ *                   @OA\Property(property="name", type="array", @OA\Items(type="string", example="The name field is required.")),
+ *                   @OA\Property(property="email", type="array", @OA\Items(type="string", example="The email field is required.")),
+ *                   @OA\Property(property="body", type="array", @OA\Items(type="string", example="The body field is required."))
+ *               )
+ *           )
+ *       )
  *   ),
  *
  * @OA\Get(
@@ -79,9 +99,17 @@ use App\Http\Controllers\Api\v1\Controller;
  *                 @OA\Property(property="id", type="integer", example=1),
  *                 @OA\Property(property="name", type="string", example="New comment"),
  *                 @OA\Property(property="email", type="string", example="newexample@email.com"),
- *                 @OA\Property(property="body", type="string", example="New post"),
- *             ),
+ *                 @OA\Property(property="body", type="string", example="New post")
+ *             )
  *         ),
+ *
+ *         @OA\Response(
+ *             response=404,
+ *             description="Comment not found or something went wrong",
+ *             @OA\JsonContent(
+ *                 @OA\Property(property="error", type="string", example="Something went wrong")
+ *             )
+ *         )
  *     ),
  *
  * @OA\Put(
@@ -104,9 +132,9 @@ use App\Http\Controllers\Api\v1\Controller;
  *           @OA\JsonContent(
  *               @OA\Property(property="postId", type="integer", example=1),
  *               @OA\Property(property="id", type="integer", example=1),
- *               @OA\Property(property="name", type="string", example="Some name"),
- *               @OA\Property(property="email", type="string", example="example@email.com"),
- *               @OA\Property(property="body", type="string", example="Lorem ipsum dolor sit amet.")
+ *               @OA\Property(property="name", type="string", example="Updated comment"),
+ *               @OA\Property(property="email", type="string", example="updatedemail@email.com"),
+ *               @OA\Property(property="body", type="string", example="Updated body")
  *           )
  *       ),
  *
@@ -116,9 +144,9 @@ use App\Http\Controllers\Api\v1\Controller;
  *           @OA\JsonContent(
  *               @OA\Property(property="postId", type="integer", example=1),
  *               @OA\Property(property="id", type="integer", example=1),
- *               @OA\Property(property="name", type="string", example="Some name"),
- *               @OA\Property(property="email", type="string", example="example@email.com"),
- *               @OA\Property(property="body", type="string", example="Lorem ipsum dolor sit amet.")
+ *               @OA\Property(property="name", type="string", example="Updated comment"),
+ *               @OA\Property(property="email", type="string", example="updatedemail@email.com"),
+ *               @OA\Property(property="body", type="string", example="Updated body")
  *           )
  *       ),
  *
@@ -128,7 +156,13 @@ use App\Http\Controllers\Api\v1\Controller;
  *           @OA\JsonContent(
  *               @OA\Property(property="status", type="string", example="error"),
  *               @OA\Property(property="status code", type="integer", example=422),
- *               @OA\Property(property="Validation error(s)", type="object", additionalProperties={})
+ *               @OA\Property(property="Validation error(s)", type="object",
+ *                   @OA\Property(property="postId", type="array", @OA\Items(type="string", example="The postId field is required.")),
+ *                   @OA\Property(property="id", type="array", @OA\Items(type="string", example="The id field is required.")),
+ *                   @OA\Property(property="name", type="array", @OA\Items(type="string", example="The name field is required.")),
+ *                   @OA\Property(property="email", type="array", @OA\Items(type="string", example="The email field is required.")),
+ *                   @OA\Property(property="body", type="array", @OA\Items(type="string", example="The body field is required."))
+ *               )
  *           )
  *       ),
  *
@@ -141,7 +175,77 @@ use App\Http\Controllers\Api\v1\Controller;
  *       )
  *  ),
  *
+ * @OA\Delete(
+ *       path="/api/v1/comments/{id}",
+ *       summary="Delete a specific comment",
+ *       tags={"Comment"},
+ *
+ *       @OA\Parameter(
+ *           name="id",
+ *           in="path",
+ *           description="ID of the comment to delete",
+ *           required=true,
+ *           @OA\Schema(type="string"),
+ *           example="1"
+ *       ),
+ *
+ *       @OA\Response(
+ *           response=200,
+ *           description="Comment deleted successfully",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="message", type="string", example="Deleted comment with id 1")
+ *           )
+ *       ),
+ *
+ *       @OA\Response(
+ *           response=404,
+ *           description="Something went wrong",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="error", type="string", example="Something went wrong")
+ *           )
+ *       )
+ *  ),
+ *
+ * @OA\Get(
+ *       path="/api/v1/comments/post/{id}",
+ *       summary="List comments for a specific post",
+ *       tags={"Comment"},
+ *
+ *       @OA\Parameter(
+ *           name="id",
+ *           in="path",
+ *           description="ID of the post to fetch comments for",
+ *           required=true,
+ *           @OA\Schema(type="string"),
+ *           example="1"
+ *       ),
+ *
+ *       @OA\Response(
+ *           response=200,
+ *           description="List of comments for the specified post",
+ *           @OA\JsonContent(
+ *               type="array",
+ *               @OA\Items(
+ *                   type="object",
+ *                   @OA\Property(property="postId", type="integer", example=1),
+ *                   @OA\Property(property="id", type="integer", example=1),
+ *                   @OA\Property(property="name", type="string", example="Lorem ipsum"),
+ *                   @OA\Property(property="email", type="string", example="example@email.com"),
+ *                   @OA\Property(property="body", type="string", example="Blanditiis corporis dolore dolorem eaque fuga")
+ *               )
+ *           )
+ *       ),
+ *
+ *       @OA\Response(
+ *           response=404,
+ *           description="Something went wrong",
+ *           @OA\JsonContent(
+ *               @OA\Property(property="error", type="string", example="Something went wrong")
+ *           )
+ *       )
+ *   )
  */
+
 
 class CommentController extends Controller
 {
